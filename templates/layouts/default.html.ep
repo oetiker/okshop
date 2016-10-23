@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta property="og:site_name" content="Oltner Kalender"/>
+    <meta property="og:url" content="https://www.oltner-kalender.ch" />
+    <meta property="og:image" content="https://www.oltner-kalender.ch/images/ok2017-01.jpg" />
+        <meta property="og:description" content="Ein Kalender mit den besten Fotografien von Olten, zugunsten von Projekten die Olten zu einer lebenswerten Stadt machen." />
+    <meta property="og:title" content="Oltner Kalender Shop"/>
+    <meta property="fb:app_id" content="1793474840937766"/>
+    <title><%= title %> - Oltner Kalender</title>
+    <!--Import Google Icon Font-->
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="<%= url_for 'css/materialize.min.css' %>"  media="screen,projection"/>
+
+    <link type="text/css" rel="stylesheet" href="<%= url_for 'css/custom.css' %>" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no"/>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="<%= url_for 'js/jquery-2.1.1.min.js' %>"></script>
+    <script type="text/javascript" src="<%= url_for 'js/materialize.min.js' %>"></script>
+    <script type="text/javascript" src="<%= url_for 'js/fastclick.js' %>"></script>
+    <script>
+    $(document).ready(function() {
+        FastClick.attach(document.body);
+        $(".button-collapse").sideNav();
+    });
+    </script>
+  </head>
+  <body>
+
+  <nav>
+    <div class="nav-wrapper grey">
+      <div class="container">
+          <a href="<%= url_for './' %>" class="brand-logo">Oltner Kalender <span class="hide-on-small-only">2017</span> <%= $shopmode ? '('.$login.')' : '' %></a>
+
+          <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="<%= url_for './' %>">Shop</a></li>
+            % if ($login) {
+                <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
+            % }
+           <li><a href="<%= url_for './about' %>">Über uns</a></li>
+           % if ($shopmode) {
+               <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
+           % }
+          </ul>
+          <ul class="side-nav" id="mobile-menu">
+              <li><a href="<%= url_for './' %>">Shop</a></li>
+              % if ($login) {
+                  <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
+              % }
+              <li><a href="<%= url_for './about' %>">Über uns</a></li>
+              % if ($shopmode) {
+                  <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
+              % }
+          </ul>
+      </div>
+    </div>
+  </nav>
+    <%= content %>
+    <footer class="page-footer grey">
+        <div class="container">
+            <div class="row">
+              <div class="col s12">
+                <p class="grey-text text-lighten-4">Der Oltner Kalender ist eine Initiative von <a class="goOP"
+                        href="https://tobi.oetiker.ch">Tobias Oetiker</a> in
+                        Zusammenarbeit mit <a href="http://www.kurtschibler.ch/">Kurt
+                        Schibler</a> und <a href="http://florianamoser.ch/">Florian
+                        Amoser</a>. Kontakt:&nbsp;tobi@oetiker.ch</p>
+              </div>
+            </div>
+          </div>
+      <div class="footer-copyright">
+        <div class="container">
+        © 2016 Oltner Kalender.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

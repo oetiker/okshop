@@ -1,0 +1,37 @@
+% use POSIX;
+Olten, <%= POSIX::strftime("%d.%m.%Y, %H:%M:%S",localtime(time)) %>
+
+
+Kalenderbestellung #<%= $id %>
+----------------------------
+
+%= sprintf "%2d  %-40s %3d CHF", $d->{calendars} ,"Oltner Kalender 2017", $cost_calendar
+%= sprintf "%2d  %-40s %3d CHF", 1, $d->{delivery} eq 'collect' ? "Abholen in der Buchhandlung Klosterplatz" : "Lieferung per Post", $cost_porto
+%= sprintf "%44s %3d CHF ","Total",$cost_total
+
+Den Totalbetrag haben wir danken erhalten. <%= $source ? "Zahlungsmittel: $source." : '' %>
+
+Adresse
+-------
+
+%= "$d->{addr}{first_name} $d->{addr}{last_name}"
+% if ($d->{addr}{company}) {
+%= "$d->{addr}{company}"
+% }
+%= "$d->{addr}{street} $d->{addr}{nr}"
+%= "$d->{addr}{zip} $d->{addr}{town}"
+%= "$d->{addr}{country}"
+
+Unterstützung
+-------------
+
+Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:
+
+% for my $org (@$orgs) {
+* <%= $org %>
+% }
+
+Mit freundlichen Grüssen
+das Oltnerkalenderbestellsystem
+
+www.oltner-kalender.ch

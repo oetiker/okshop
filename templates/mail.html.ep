@@ -1,0 +1,85 @@
+% use POSIX;
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Oltner Kalender 2017 Bestellbestätigug</title>
+        <style>
+        html, body {
+            font-family: sans-serif;
+        }
+        table, caption, tbody, tfoot, thead, tr, th, td {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+        table {
+            border-collapse: collapse;
+            order-spacing: 0;
+        }
+        td {
+            padding: 4px 6px 4px 6px;
+        }
+        tbody tr:nth-child(odd) {
+            background: #eee;
+        }
+        td:nth-child(3) {
+            text-align: right;
+        }
+        </style>
+    </head>
+    <body>
+        <div>Olten, <%= POSIX::strftime("%d.%m.%Y %H:%M:%S",localtime(time)) %></div>
+
+        <h1>Kalenderbestellung #<%= $id %></h1>
+
+        <table>
+            <tr>
+                <td><%= $d->{calendars} %></td>
+                <td>Oltner Kalender 2017</td>
+                <td><%= $cost_calendar %> CHF</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><%= $d->{delivery} eq 'collect'
+                    ? "Abholen in der Buchhandlung Klosterplatz"
+                    : "Lieferung per Post" %> </td>
+                <td><%= $cost_porto %> CHF</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Total</td>
+                <td><%= $cost_total %> CHF</td>
+            </tr>
+        </table>
+
+        <p>Den Totalbetrag haben wir danken erhalten. <%= $source ? "Zahlungsmittel: $source." : '' %></p>
+
+        <h2>Adresse</h2>
+        <address>
+            <%= "$d->{addr}{first_name} $d->{addr}{last_name}" %><br/>
+            % if ($d->{addr}{company}) {
+                <%= "$d->{addr}{company}" %><br/>
+            % }
+            <%= "$d->{addr}{street} $d->{addr}{nr}" %><br/>
+            <%= "$d->{addr}{zip} $d->{addr}{town}" %><br/>
+            <%= "$d->{addr}{country}" %>
+        </address>
+
+        <h2>Unterstützung</h2>
+
+        <p>Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:</p>
+
+        <ul>
+        % for my $org (@$orgs) {
+            <li><%= $org %></li>
+        % }
+        </ul>
+
+        <p>Das Oltnerkalenderbestellsystem<br/>
+        <a href="https://www.oltner-kalender.ch">www.oltner-kalender.ch</a>
+        </p>
+    </body>
+</html>

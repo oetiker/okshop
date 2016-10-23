@@ -1,0 +1,27 @@
+% layout 'default';
+% title 'Bestellungen';
+
+<div class="container">
+    <h1>Bestellungen</h1>
+    <table class="highlit responsive-table">
+        <thead>
+          <tr>
+            % for my $col (@$cols) {
+              <th data-field="<%= $col %>"><%= $fields->{$col}{label} %></th>
+            % }
+          </tr>
+        </thead>
+
+        <tbody>
+% while ( my $row = $table->hash ) {
+          <tr>
+%   for my $col ( @$cols ) {
+%       my $key = $fields->{$col}{value} // $col;
+%       my $value = ref $key eq 'CODE' ?  $key->($row) : $row->{'ord_'.$key};
+            <td><%= $value %></td>
+%   }
+          </tr>
+% }
+        </tbody>
+      </table>
+</div>

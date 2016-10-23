@@ -1,0 +1,119 @@
+
+
+nav {
+    z-index: 1000;
+}
+.material-tooltip {
+    width: 30ex;
+}
+
+#project-list .card-image {
+    padding: 4px;
+}
+
+#project-list .card .card-content .card-title {
+    font-size: 17px;
+    line-height: inherit;
+}
+
+#project-list p {
+    margin-top: 4px;
+    font-size: 14px;
+}
+#project-list .card-content {
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+@media only screen and (min-width: 1131px) and (max-width: 1200px) {
+    #project-list .card.horizontal {
+        min-height: 130px;
+    }
+}
+@media only screen and (min-width:993px) and (max-width: 1130px) {
+    #project-list .card.horizontal {
+        min-height: 160px;
+    }
+}
+@media only screen and (max-width:992px) {
+    #project-list .card.horizontal {
+        padding-bottom: 5px;
+    }
+}
+
+@media only screen and (max-width:320px) {
+    h1 {
+        font-size: 3rem;
+    }
+    h2 {
+        font-size: 2.5rem;
+    }
+}
+
+#project-list [type="checkbox"]+label {
+    padding-left: 30px;
+}
+
+#project-list [type="checkbox"].filled-in:checked+label:after {
+    border-color: black;
+    background-color: black;
+}
+#payform .jp-card {
+    font-family: "Roboto", sans-serif;
+    min-width: 200px;
+}
+
+#payform .row {
+    margin-bottom: 0px;
+}
+
+@media only screen and (min-width: 993px) {
+    #payform {
+        max-width: 700px;
+    }
+}
+
+.card-wrapper {
+    margin-bottom: 3ex;
+}
+
+#order-button {
+    position: absolute;
+    bottom: 10%;
+    right: 5%;
+    z-index: 100;
+    display: none;
+}
+
+#calender-title {
+    position: absolute;
+    top: 5%;
+    width: 100%;
+    z-index: 100;
+    text-align: center;
+    color: white;
+    font-size: 40px;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.5);
+}
+
+.grey-text a {
+    color: #ffffff;
+}
+
+.container .row .col.input-field.fake-field {
+    padding-top: 0.75rem;
+}
+
+#busypop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 100000;
+}
+
+#busypop .valign {
+    margin: auto;
+}

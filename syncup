@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync --archive lib public templates oltcal@james:okshop

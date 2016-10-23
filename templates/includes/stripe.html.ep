@@ -1,0 +1,55 @@
+<div id="stripeerrorpop" class="modal">
+  <div class="modal-content">
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+  </div>
+</div>
+
+<div id="payform" class="modal">
+  <div class="modal-content">
+    <div class="row">
+      <div class="col s12">
+          <a href="#!" class="modal-action modal-close right black-text"><i class="material-icons">close</i></a>
+      </div>
+      <div class="col s12 card-wrapper"></div>
+
+      <div class="input-field col s12">
+        <input id="card_name" type="text" class="validate">
+        <label for="card_name">Vorname Nachname</label>
+      </div>
+      <div class="input-field col s7">
+        <input id="card_num" type="text" class="validate">
+        <label for="card_num">Kreditkarten Nummer</label>
+      </div>
+      <div class="input-field col s3">
+        <input id="card_expi" type="text" class="validate">
+        <label for="card_expi">Gültig bis MM/JJJJ</label>
+      </div>
+      <div class="input-field col s2">
+        <input id="card_cvc" type="text" class="validate">
+        <label for="card_cvc">CVC</label>
+      </div>
+      <div class="col s12">
+        Kalender <span class="cost_calendar"></span>.00 CHF + Porto <span class="cost_porto"></span>.00 CHF =  <b><span class="cost_total"></span>.00 CHF</b>
+        <button id="order_btn" class="right waves-effect waves-green btn">Bezahlen</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script>Stripe.setPublishableKey('<%= $stripePubKey %>');</script>
+<script type="text/javascript" src="<%= url_for 'js/jquery.card.js' %>"></script>
+<script>
+    $(document).ready(function(){
+        $('form#orderform').card({
+            container: '.card-wrapper',
+            formSelectors: {
+                numberInput: 'input#card_num',
+                expiryInput: 'input#card_expi',
+                cvcInput: 'input#card_cvc',
+                nameInput: 'input#card_name'
+             }
+        });
+    });
+</script>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:ache="http://post.ch/AdressCheckerExtern/V4-01-00"
+	xmlns:inMsg="http://post.ch/AdressCheckerExtern/V4-01-00" xmlns:errMsg="http://post.ch/ACHTypes/V4-01-00"
+	xmlns:outMsg="http://post.ch/AdressCheckerExtern/V4-01-00" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="AdressCheckerExtern-V4-01-00"
+	targetNamespace="http://post.ch/AdressCheckerExtern/V4-01-00">
+	<types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			version="0.1">
+			<xsd:import namespace="http://post.ch/AdressCheckerExtern/V4-01-00"
+				schemaLocation="adrCheckerExterne-V4-01-00.xsd" />
+		</xsd:schema>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			version="0.1">
+			<xsd:import namespace="http://post.ch/ACHTypes/V4-01-00"
+				schemaLocation="adrCheckerTypes-V4-01-00.xsd" />
+		</xsd:schema>
+	</types>
+	<message name="JavaExceptionMessage">
+		<part name="FaultDetails" element="errMsg:JavaException" />
+	</message>
+	<message name="Input">
+		<part name="Body" element="inMsg:AdressCheckerRequest" />
+	</message>
+	<message name="Output">
+		<part name="Body" element="inMsg:AdressCheckerResponse" />
+	</message>
+	<portType name="ACHePortType">
+		<operation name="AdrCheckerExterne">
+			<input name="Input" message="ache:Input" />
+			<output name="Output" message="ache:Output" />
+			<fault name="JavaException" message="ache:JavaExceptionMessage" />
+		</operation>
+	</portType>
+	<binding name="ACHePortTypeBinding" type="ache:ACHePortType">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="AdrCheckerExterne">
+			<soap:operation
+				soapAction="http://post.ch/AdressCheckerExtern/V4-01-00"
+				style="document" />
+			<input name="Input">
+				<soap:body parts="Body" use="literal"
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</input>
+			<output name="Output">
+				<soap:body parts="Body" use="literal"
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</output>
+			<fault name="JavaException">
+				<soap:fault name="JavaException" use="literal"
+					encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+			</fault>
+		</operation>
+	</binding>
+	<service name="AdressCheckerExternService">
+		<port name="ACHePortType" binding="ache:ACHePortTypeBinding">
+			<soap:address
+				location="https://webservices.post.ch/IN_ADRCHECKERxV4xEXTERNE/V4-01-00"
+				xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" />
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,173 @@
+{
+    "GENERAL": {
+        // the log file is only active in production mode
+        "logFile": "/tmp/logsender.log",
+        "secret": "mysecret",
+        "stripePubKey": "pk_test_.....",
+        "stripeSecretKey": "sk_test_......"
+    },
+    "ORGANISATIONS": [
+        {
+            "key": "kco",
+            "name": "Kulturverein Coq d'Or",
+            "motto": "Wir machen Olten lebenswert, indem wir jungem Kulturschaffen von Literatur bis Rock eine Bühne bieten. ",
+            "url": "http://www.coq-d-or.ch/",
+            "kontakt": "Daniel Kissling",
+            "email": "info@coq-d-or.ch",
+            "logo": "coq-100.png"
+        },
+        {
+            "key": "gm",
+            "name": "Guggemusig Müüs",
+            "motto": "Wir machen Olten lebenswert weil wir Farbe und Fröhlichkeit in die Stadt tragen - für jung und alt!",
+            "url": "http://www.mueues.ch",
+            "kontakt": "Doris Oetiker-Streit",
+            "email": "doris@oetiker.ch",
+            "logo": "mueues-logo-100x100.png"
+        },
+        {
+            "key": "po",
+            "name": "Pfadi Olten",
+            "motto": "Wir machen Olten lebenswert, indem wir jungen Menschen eine ganzheitliche Entwicklung ermöglichen.",
+            "url": "http://www.pfadiolten.ch",
+            "kontakt": "Mischa Kaspar",
+            "email": "mischa.kaspar@gmail.com",
+            "logo": "pfadi-logo-100.png"
+        },
+        {
+            "key": "oiw",
+            "name": "Olten im Wandel",
+            "motto": "Wir machen Olten lebenswert, weil wir uns für soziale und nachhaltige Strukturen engagieren.",
+            "url": "http://www.oltenimwandel.ch",
+            "kontakt": "Raphael Schär",
+            "email": "raphael.schaer@gmail.com",
+            "logo": "olten-im-wandel-100.png"
+        },
+        {
+            "key": "pko",
+            "name": "Pro Kultur Olten",
+            "motto": "Wir machen Olten lebenswert dank Fantasie und Hartnäckigkeit: die Stadt muss Kultur vielfältig fördern.",
+            "url": "http://www.pro-kultur-olten.ch",
+            "kontakt": "Felix Wettstein, Vorstandsmitglied",
+            "email": "felix.wettstein@bluewin.ch",
+            "logo": "pro-kultur-100.png"
+        },
+        {
+            "key": "st",
+            "name": "Schwager Theater",
+            "motto": "Wir machen Olten lebenswert, weil das Schwager Theater seinem Publikum Kleinkunst vom Feinsten präsentiert.",
+            "url": "http://www.schwager.ch",
+            "kontakt": "Christoph Schwager",
+            "email": "info@schwager.ch",
+            "logo": "Logo_Schwager_Theate-100x100.png"
+        },
+        {
+            "key": "tj",
+            "name": "THEATER JUcKT",
+            "motto": "Wir machen Olten lebenswert, weil wir Kindern und Jugendlichen ermöglichen, Theater zu spielen.",
+            "url": "http://theaterjuckt.ch/",
+            "kontakt": "Käthi Vögeli",
+            "email": "info@theaterjuckt.ch",
+            "logo": "juckt_logo_100x100.jpg"
+        },
+        {
+            "key": "jkon",
+            "name": "JKON - Junge Kunst Olten",
+            "motto": "Wir machen Olten lebenswertER mit der JKON - Junge Kunst Olten.",
+            "url": "http://www.jkon.ch/",
+            "kontakt": "Barbara von Büren",
+            "email": "baerbi-v-b@bluemail.ch",
+            "logo": "JKON_Logo_100x100px.png"
+        },
+        {
+            "key": "be",
+            "name": "BLUELANE EVENTS",
+            "motto": "Wir machen Olten lebenswert, dank unseren Konzerten aus und für die Region.",
+            "url": "http://www.bluelane.ch",
+            "kontakt": "Marc Tabeling",
+            "email": "tabeling@relounge.ch",
+            "logo": "BLUELANE_Logo_Cyan-Black.jpg"
+        },
+        {
+            "key": "cs",
+            "name": "Caritas Solothurn",
+            "motto": "Wir machen Olten lebenswert, weil wir uns für benachteiligte Menschen einsetzen.",
+            "url": "http://www.caritas-solothurn.ch",
+            "kontakt": "Gian Spörri",
+            "email": "g.spoerri@caritas-solothurn.ch",
+            "logo": "cso_logo.jpg"
+        },
+        {
+            "key": "so",
+            "name": "Schützi Olten",
+            "motto": "Wir machen Olten lebenswert, weil die Schützi für alle und Alles offen ist.",
+            "url": "http://www.schuetzi.ch",
+            "kontakt": "Oli Krieg",
+            "email": "info@schuetzi.ch",
+            "logo": "schuetzi_logo_kue_weiss.jpg"
+        },
+        {
+            "key": "vw",
+            "name": "Wärchlade Olten",
+            "motto": "Wir machen Olten lebenswert, weil wir mit unserem Wärchlade seit 25 Jahren zu einer bunteren Stadt beitragen.",
+            "url": "http://www.waerchlade.ch",
+            "kontakt": "Rita von Däniken",
+            "email": "waerchlade@bluewin.ch",
+            "logo": "waerchlade-100.png"
+        },
+        {
+            "key": "ikubo",
+            "name": "IKUBO interkullturelle Bibliothek Olten",
+            "motto": "Wir machen Olten lebenswert, weil wir die Interkulturalität der Stadt bewusst leben.",
+            "url": "http://www.ikubo.ch",
+            "kontakt": "Maria Dea  Covella",
+            "email": "kontakt@ikubo.ch",
+            "logo": "ikubo-100.png"
+        },
+        {
+            "key": "m8",
+            "name": "Jugendkulturverein mission8",
+            "motto": "Wir machen Olten lebenswert, indem wir Konzerte und Partys mit regionalen Künstlern nameanisieren.",
+            "url": "http://www.mission8.ch",
+            "kontakt": "Jonas Hufschmid",
+            "email": "john@mission8.ch",
+            "logo": "mission8-Logo-kl.jpg"
+        },
+        {
+            "key": "aio",
+            "name": "art i.g. Kultur in Olten",
+            "motto": "Wir machen Olten lebenswert weil wir mit Kunst, Poesie & Wortkunst zum Nachdenken, Staunen & Lachen anregen.",
+            "url": "http://www.artig.ch",
+            "kontakt": "Rainer von Arx",
+            "email": "rainer.vonarx@artig.ch",
+            "logo": "artig-100x100.png"
+        },
+        {
+            "key": "gpou",
+            "name": "Graue Panther Olten",
+            "motto": "Wir machen Olten lebenswert, weil wir die Stadt mit kulturellen und politischen Anlässen bereichern.",
+            "url": "http://www.grauepanther-olten.ch",
+            "kontakt": "Ruedi Fasnacht, Präsident, Hasenweg 6, 4616 Kappel",
+            "email": "ruedifasnacht@sunrise.ch",
+            "logo": "graue-panter-100.png"
+        },
+        {
+            "key": "tto",
+            "name": "Tagesstätte Sonnegg Olten",
+            "motto": "Wir machen Olten lebenswert, denn wir bieten unseren Gästen ein zweites Zuhause.",
+            "url": "http://www.tagesstaette-olten.ch",
+            "kontakt": "Thomas Schwab",
+            "email": "info@tagesstaette-olten.ch",
+            "logo": "tagesstaette-100x100.png"
+        },
+        {
+            "key": "bzcult",
+            "name": "Begegnungszentrum CULTIBO",
+            "motto": "Wir machen Olten lebenswert, indem wir zusammen mit der Quartierbevölkerung einen lebendigen Ort schaffen.",
+            "url": "https://www.cultibo.ch",
+            "kontakt": "Paul Dilitz",
+            "email": "dilitzp@bluewin.ch",
+            "logo": "cultibo-100x100.png"
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+		edited with XMLSpy v2012 sp1 (http://www.altova.com) by Die
+		Schweizerische Post (Die Schweizerische Post)
+	-->
+<!--
+		Versioning: increment the major-version (V1, V2, etc) only and only if
+		the change is not backward-compatible -> requires client-migration!
+	-->
+<!--
+		For backward-compatible changes, just increment the version attribute
+		(eg version="1.3"). Remark: this version-attribute is just for
+		documentation-purpose and has no impact on validation
+	-->
+<xsd:schema xmlns:ach="http://post.ch/ACHTypes/V4-01-00" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://post.ch/ACHTypes/V4-01-00"
+	elementFormDefault="qualified" attributeFormDefault="unqualified" id="UID-3D000000-9BB0C3FF380100-0A981E39-01">
+
+	<xsd:element name="JavaException" type="ach:JavaExceptionType" />
+
+	<xsd:complexType name="JavaExceptionType">
+		<xsd:sequence>
+			<xsd:element name="Type" type="xsd:string" />
+			<xsd:element name="Message" type="xsd:string" />
+			<xsd:element name="Trace" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

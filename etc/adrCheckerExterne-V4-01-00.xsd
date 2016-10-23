@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:ache="http://post.ch/AdressCheckerExtern/V4-01-00" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	attributeFormDefault="unqualified" elementFormDefault="unqualified" id="UID-4C000000-9BB0C3FF380100-0A981E39-01"
+	targetNamespace="http://post.ch/AdressCheckerExtern/V4-01-00">
+	<xsd:element name="AdressCheckerResponse" type="ache:AdressCheckerResponseType" />
+	<xsd:element name="AdressCheckerRequest" type="ache:AdressCheckerRequestType" />
+	<xsd:complexType name="AdressCheckerResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" default="0" name="Count" type="xsd:integer" />
+			<xsd:element minOccurs="0" default="false" name="HasMoreRows" type="xsd:boolean" />
+			<xsd:element maxOccurs="unbounded" minOccurs="0" name="rows">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="NameCurrentlyValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="NamePastValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="NameFutureValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="NameFirstNameCurrentlyValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="NameFirstNamePastValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="NameFirstNameFutureValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="HasPbox" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="PboxZip" type="xsd:string" />
+						<xsd:element minOccurs="0" name="PboxTown" type="xsd:string" />
+						<xsd:element minOccurs="0" name="HouseKey" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="Street" type="xsd:string" />
+						<xsd:element minOccurs="0" name="StreetFormatted" type="xsd:string" />
+						<xsd:element minOccurs="0" name="HouseNbr" type="xsd:string" />
+						<xsd:element minOccurs="0" name="DeliveryPoint" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="AdressOfficial" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="StreetValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="HouseNbrValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="DeliveryPointHouseKey" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="AlternativeStreet" type="xsd:string" />
+						<xsd:element minOccurs="0" name="Onrp" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="Zip" type="xsd:string" />
+						<xsd:element minOccurs="0" name="Town18" type="xsd:string" />
+						<xsd:element minOccurs="0" name="Town27" type="xsd:string" />
+						<xsd:element minOccurs="0" name="ZipType" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="ZipLang" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="AdditionalOnrp" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="AdditionalZip" type="xsd:string" />
+						<xsd:element minOccurs="0" name="AdditionalTown18" type="xsd:string" />
+						<xsd:element minOccurs="0" name="AdditionalTown27" type="xsd:string" />
+						<xsd:element minOccurs="0" name="AdditionalZipType" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="AdditionalZipLang" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="ZipValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="TownValid" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="ZipValidFuture" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="TownOfficial" type="ache:TrueFalseType" />
+						<xsd:element minOccurs="0" name="StreetOfficial" type="ache:TrueFalseType" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="Fault">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="FaultNr" type="xsd:integer" />
+						<xsd:element minOccurs="0" name="FaultMsg" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AdressCheckerRequestType">
+		<xsd:sequence>
+			<xsd:element name="Params">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element default="10" name="MaxRows">
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:integer">
+									<xsd:maxExclusive value="101" />
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+						<xsd:element name="CallUser" type="xsd:string" />
+						<xsd:element default="1" name="SearchLanguage" type="xsd:integer" />
+						<xsd:element default="10" name="SearchType" type="xsd:integer" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element minOccurs="0" name="Name" type="xsd:string" />
+			<xsd:element minOccurs="0" name="FirstName" type="xsd:string" />
+			<xsd:element minOccurs="0" name="Street" type="xsd:string" />
+			<xsd:element minOccurs="0" name="HouseNbr" type="xsd:string" />
+			<xsd:element minOccurs="0" default="0" name="Onrp" type="xsd:integer" />
+			<xsd:element minOccurs="0" name="Zip" type="xsd:string" />
+			<xsd:element minOccurs="0" name="Town" type="xsd:string" />
+			<xsd:element default="0" name="HouseKey" type="xsd:integer" />
+			<xsd:element minOccurs="0" name="HistoricalSearch" type="ache:TrueFalseType" default="0" />
+			<xsd:element minOccurs="1" name="PboxAddress" type="ache:TrueFalseType" default="0" />
+			<xsd:element minOccurs="0" name="PboxNbr" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="TrueFalseType">
+		<xsd:restriction base="xsd:int" />
+	</xsd:simpleType>
+</xsd:schema>

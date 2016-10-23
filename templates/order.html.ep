@@ -1,0 +1,202 @@
+% layout 'default';
+% title 'Bestellung';
+
+<div class="container">
+<br/>
+<br/>
+<div id="pics" class="z-depth-3 slider">
+  <a id="order-button" class="waves-effect waves-light btn" href="#order-start">Kalender Bestellen</a>
+  <ul class="slides">
+  % for my $pic ( sort glob $home->rel_file('public').'/images/*.jpg' ){
+  %   my $file = [ split m{/}, $pic ]->[-1];
+    <li>
+      <img src="<%= url_for 'images'.'/'.$file %>">
+    </li>
+  % }
+  </ul>
+</div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+  <div class="col s12">
+      <br/>
+
+      <form id="orderform">
+      <a name="order-start"></a>
+      <h2>Kalender bestellen</h2>
+      <p class="flow-text">
+      Damit wir genügend Kalender produzieren können, muss der Kalender bis zum 15.&nbsp;November bestellt werden. Bestellen Sie Ihr Exemplar online über dieses Webformular (Zahlung per Kreditkarte) oder persönlich in der
+      <a href="https://goo.gl/maps/Th5qRVrm4CT2" target="_new">Buchhandlung Klosterplatz</a>.
+      Die Auslieferung erfolgt Anfang Dezember.
+      </p>
+
+      <div class="row"><div class="col s12"><div class="card"><div class="card-content row">
+            <div class="input-field col s2">
+              <input id="calendars" type="number" value="1" class="validate" />
+              <label for="order_count">Anzahl</label>
+            </div>
+            <div class="input-field fake-field col s8">
+              Oltner Kalender 2017, Format A3, 26 Bilder
+            </div>
+            <div class="input-field fake-field col s2 right-align">
+              <span class="cost_calendar"></span> CHF
+            </div>
+      </div></div></div></div>
+
+      <h2>Gewinnverteilung</h2>
+      <p class="flow-text">
+      Mit dem Kauf des Oltner Kalenders 2016 unterstützen Sie die kulturelle Vielfalt in der Region Olten. Wählen Sie aus der folgenden Liste die Organisationen aus, die Sie berücksichtigen möchten:
+      </p>
+
+      <div id="project-list" class="row">
+      % for my $org (sort { lc $a->{name} cmp lc $b->{name} } @$ORGANISATIONS) {
+        <div class="col s12 l6">
+            <div class="card horizontal ">
+              <div class="card-image">
+                <img src="<%= url_for("logos/" . ($org->{logo} // 'logo.png')) %>" />
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                    <input
+                        type="checkbox"
+                        class="project filled-in"
+                        id="check_<%= $org->{key} %>" />
+                    <label for="check_<%= $org->{key} %>" class="black-text">
+                        <span class="card-title"><%= $org->{name} %></span>
+                    </label>
+                    <p><%= $org->{motto} %></p>
+                </div>
+              </div>
+            </div>
+        </div>
+      % }
+      </div>
+
+
+      <h2>Lieferadresse</h2>
+      <div class="row"><div class="col s12"><div class="card"><div class="card-content">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="addr_first_name" type="text" class="validate" >
+          <label for="addr_first_name">Vorame</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="addr_last_name" type="text" class="validate" >
+          <label for="addr_last_name">Nachname</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="addr_company" type="text" class="validate optional">
+          <label for="addr_company">Firma</label>
+        </div>
+      </div>
+      <div class="row">
+          <div class="input-field col s9">
+            <input id="addr_street" type="text" class="validate">
+            <label for="addr_street">Strasse</label>
+          </div>
+          <div class="input-field col s3">
+            <input id="addr_nr" type="text" class="validate">
+            <label for="addr_nr">Hausnummer</label>
+          </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s4">
+          <input id="addr_zip" type="number" class="validate">
+          <label for="addr_zip">PLZ</label>
+        </div>
+        <div class="input-field col s8">
+          <input id="addr_town" type="text" class="validate">
+          <label for="addr_town">Ort</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="addr_country" type="text" class="validate" value="Schweiz">
+          <label for="addr_country">Land</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="addr_email" type="email" class="validate">
+          <label for="addr_email">eMail Adresse</label>
+        </div>
+      </div>
+      </div></div></div></div>
+      <h2>Zustellung</h2>
+      <p class="flow-text">
+      Der Kalender kann entweder in der Buchhandlung Klosterplatz abgeholt oder per Post geliefert werden.</p>
+      <div class="row"><div class="col s12"><div class="card"><div class="card-content row">
+          <div class="input-field col s10">
+              <select id="delivery">
+                <option value="" disabled selected>Wählen Sie die Zustellungsart</option>
+                <option value="collect">Abholen in der Buchhandlung Klosterplatz</option>
+                <option value="ship">Zustellung per Post</option>
+              </select>
+              <label for="delivery">Zustellung</label>
+          </div>
+          <div class="input-field fake-field col s2 right-align">
+              <span class="cost_porto"></span> CHF
+          </div>
+      </div></div></div></div>
+      <div class="row">
+          <div class="col s12 right-align">
+              Total:&nbsp;&nbsp;<b><span class="cost_total"></span> CHF</b>
+          </div>
+      </div>
+      <div>
+% if ($shopmode) {
+         <a id="shoporder_btn" class="waves-effect waves-light btn right" href="#!">Bestellen</a>
+% }
+% else {
+          <a id="payform_btn" class="waves-effect waves-light btn right" href="#!">Kasse</a>
+% }
+      </div>
+
+%= $shopmode ? '' : include 'includes/stripe';
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- POPUPS -->
+
+<div id="errorpop" class="modal">
+  <div class="modal-content">
+  </div>
+  <div class="modal-footer">
+    <a id="error_ok" href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+  </div>
+</div>
+
+<div id="thankyoupop" class="modal">
+  <div class="modal-content">
+      <h4>Danke für Ihre Bestellung</h4>
+      <p class="flow-text">Der Kalender geht Mitte November in Produktion. Wir rechnen damit,
+      Anfang Dezember mit der Auslieferung beginnen zu können.
+      Sobald Ihr Kalender bereit ist, werden wir Sie per eMail kontaktieren.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="/" class="waves-effect waves-green btn-flat">Ok</a>
+  </div>
+</div>
+
+<div id="busypop" class="valign-wrapper">
+  <div class="preloader-wrapper big active valign">
+    <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+     </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="<%= url_for 'js/start.js' %>"></script>
