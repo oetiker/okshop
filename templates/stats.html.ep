@@ -1,0 +1,40 @@
+% layout 'default';
+% title 'Statistik';
+
+<div class="container">
+    <h1>Statistik</h1>
+    <div class="row">
+	<div class="col s12 m6"><div class="card-panel" style="position: relative">
+	  Total  Bestellungen
+	  <span class="badge"><%= $orders %></span>
+        </div></div>
+	<div class="col s12 m6"><div class="card-panel" style="position: relative">
+	  Total  Kalender
+	  <span class="badge"><%= $calendars %></span>
+        </div></div>
+    </div>
+    <h2>Geldverteilung</h2>
+	<p class="flow-text">
+	Verteilt wird der wirkliche Gewinn aus dem Kalenderverkauf.
+Je mehr Bestelungen umso tiefer die Kosten pro Kalender. Die Zahlen in der
+Liste basieren auf einer relativ konservativen Annahme und dienen jediglich
+als Anhaltspunkt.</p>
+    <table class="highlit responsive-table striped">
+        <thead>
+          <tr>
+              <th data-field="label">Organisation</th>
+              <th data-field="part">Anteil</th>
+              <th data-field="monney">Betrag</th>
+          </tr>
+        </thead>
+        <tbody>
+% for my $row (@$table){
+          <tr>
+%   for my $val ( @$row ) {
+            <td><%= $val %></td>
+%   }
+          </tr>
+% }
+        </tbody>
+      </table>
+</div>
