@@ -42,6 +42,7 @@
             % if ($login) {
                 <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
             % }
+           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
            <li><a href="<%= url_for './about' %>">Über uns</a></li>
            % if ($shopmode) {
                <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
@@ -49,6 +50,7 @@
           </ul>
           <ul class="side-nav" id="mobile-menu">
               <li><a href="<%= url_for './' %>">Shop</a></li>
+	      <li><a href="<%= url_for './stats' %>">Statistik</a></li>
               % if ($login) {
                   <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
               % }

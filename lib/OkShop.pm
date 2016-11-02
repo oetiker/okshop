@@ -182,6 +182,7 @@ sub startup {
     });
 
     $r->get('/list')->to( controller=>'List', action=>'orderList');
+    $r->get('/stats')->to( controller=>'Stats', action=>'statsPage');
 
     $r->post('/get-cost')->to( controller=>'Order', action=>'getCost');
     $r->post('/check-data')->to( controller=>'Order', action=>'checkData');

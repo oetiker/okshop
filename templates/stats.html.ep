@@ -5,20 +5,23 @@
     <h1>Statistik</h1>
     <div class="row">
 	<div class="col s12 m6"><div class="card-panel" style="position: relative">
-	  Total  Bestellungen
+	  Aufträge eingegangen
 	  <span class="badge"><%= $orders %></span>
         </div></div>
 	<div class="col s12 m6"><div class="card-panel" style="position: relative">
-	  Total  Kalender
+	  Kalender bestellt
 	  <span class="badge"><%= $calendars %></span>
         </div></div>
+%#	<div class="col s12 m4"><div class="card-panel" style="position: relative">
+%#	  Kosten pro Kalender
+%#	  <span class="badge"><%= $cost / $calendars %></span>
+%#        </div></div>
     </div>
     <h2>Geldverteilung</h2>
 	<p class="flow-text">
 	Verteilt wird der wirkliche Gewinn aus dem Kalenderverkauf.
-Je mehr Bestelungen umso tiefer die Kosten pro Kalender. Die Zahlen in der
-Liste basieren auf einer relativ konservativen Annahme und dienen jediglich
-als Anhaltspunkt.</p>
+Je mehr Bestellungen wir erhalten, umso tiefer die Kosten pro Kalender. Die Zahlen in der
+Liste dienen lediglich als Anhaltspunkt und sind ohne Gewähr.</p>
     <table class="highlit responsive-table striped">
         <thead>
           <tr>
