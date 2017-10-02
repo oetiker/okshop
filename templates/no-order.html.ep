@@ -1,0 +1,55 @@
+% layout 'default';
+% title 'Bestellung';
+
+<div class="container">
+<br/>
+<br/>
+<div id="pics" class="z-depth-3 slider">
+  <a id="order-button" class="waves-effect waves-light btn" href="#order-start">Kalender Bestellen</a>
+  <ul class="slides">
+  % for my $pic ( sort glob $home->rel_file('public').'/images/*.jpg' ){
+  %   my $file = [ split m{/}, $pic ]->[-1];
+    <li>
+      <img src="<%= url_for 'images'.'/'.$file %>">
+    </li>
+  % }
+  </ul>
+</div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+  <div class="col s12">
+      <br/>
+
+      <form id="orderform">
+      <a name="order-start"></a>
+      <p class="flow-text">
+      Mit dem Kauf des Oltner Kalenders 2017 unterstützen Sie die kulturelle Vielfalt in der Region Olten. 
+      Wenn sie den Kalender bestellt haben, können sie ihn nun in der <a href="https://goo.gl/maps/Th5qRVrm4CT2" target="_new">Buchhandlung Klosterplatz</a>
+      abholen. Einige Exemplare liegen auch noch bereit für Leute die keine
+      Vorbestellungen gemacht haben.
+      </p>
+
+      <div id="project-list" class="row">
+      % for my $org (sort { lc $a->{name} cmp lc $b->{name} } @$ORGANISATIONS) {
+        <div class="col s12 l6">
+            <div class="card horizontal ">
+              <div class="card-image">
+                <img src="<%= url_for("logos/" . ($org->{logo} // 'logo.png')) %>" />
+              </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                    <span class="card-title"><%= $org->{name} %></span>
+                    <p><%= $org->{motto} %></p>
+                </div>
+              </div>
+            </div>
+        </div>
+      % }
+      </div>
+  </div>
+  </div>
+</div>
+<script type="text/javascript" src="<%= url_for 'js/start.js' %>"></script>

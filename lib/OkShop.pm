@@ -120,7 +120,7 @@ sub startup {
 
         my ($user,$pass) = split /:/, ($c->req->url->to_abs->userinfo // ''), 2;
         if ($pass and $user and sha1_sum($pass) eq ($cfg->{USERS}{$user} // '')){
-            $c->stash('login' => $user);
+            $c->session('login' => $user);
             return 1;
         };
         $c->res->headers->www_authenticate("Basic realm=okshop");
@@ -158,7 +158,10 @@ sub startup {
     });
 
     $r->get('/about');
-
+    $r->get('/bildeingaben');
+    $r->get('/beguenstigte');
+    $r->get('/' => 'bildeingaben');
+    
     $r->get('/login' => sub {
         my $c = shift;
         $c->session('shopmode' => 1);
@@ -173,12 +176,13 @@ sub startup {
         $c->redirect_to('.')
     });
 
-    $r->get('/' => sub {
+    $r->get('/xxxadfasf' => sub {
         my $c = shift;
         $c->stash('ORGANISATIONS' => $cfg->{ORGANISATIONS});
         $c->stash('home' => $app->home);
         $c->stash('stripePubKey' => $cfg->{GENERAL}{stripePubKey});
-        $c->render('order');
+        # $c->render('order-phase2');
+        $c->render('no-order');
     });
 
     $r->get('/list')->to( controller=>'List', action=>'orderList');

@@ -55,7 +55,9 @@
             </tr>
         </table>
 
-        <p>Den Totalbetrag haben wir danken erhalten. <%= $source ? "Zahlungsmittel: $source." : '' %></p>
+% if (!$login) {
+        <p>Den Totalbetrag haben wir dankend erhalten. <%= $source ? "Zahlungsmittel: $source." : '' %></p>
+% }
 
         <h2>Adresse</h2>
         <address>
@@ -68,15 +70,15 @@
             <%= "$d->{addr}{country}" %>
         </address>
 
-        <h2>Unterstützung</h2>
+%#        <h2>Unterstützung</h2>
 
-        <p>Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:</p>
-
-        <ul>
-        % for my $org (@$orgs) {
-            <li><%= $org %></li>
-        % }
-        </ul>
+%#        <p>Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:</p>
+%#
+%#        <ul>
+%#        % for my $org (@$orgs) {
+%#            <li><%= $org %></li>
+%#        % }
+%#       </ul>
 
         <p>Das Oltnerkalenderbestellsystem<br/>
         <a href="https://www.oltner-kalender.ch">www.oltner-kalender.ch</a>

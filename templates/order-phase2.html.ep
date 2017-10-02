@@ -27,10 +27,9 @@
       <a name="order-start"></a>
       <p class="flow-text">
       Mit dem Kauf des Oltner Kalenders 2017 unterstützen Sie die kulturelle Vielfalt in der Region Olten.
-      In der "Vorbestellphase" konnte gewählt werden wie die Einnahmen
-      verteilt werden. Nun da die Kalender Bestellung raus ist, werden wir
-      das Geld der weiteren Bestellungen entsprechend dem Verteilschlüssel
-      der vorhergehenden bestellungen verteilen.
+      In der "Vorbestellphase" konnte bei jeder Bestellung gewählt werden wie die Einnahmen
+      verteilt werden. Die weiteren Einahmen werden nun entsprechend dem
+      Schlüssel verteilt der durch die Vorbestellungen festgelegt wurde.
       </p>
 
       <div id="project-list" class="row">
@@ -42,13 +41,7 @@
               </div>
               <div class="card-stacked">
                 <div class="card-content">
-                    <input
-                        type="checkbox"
-                        class="project filled-in"
-                        id="check_<%= $org->{key} %>" />
-                    <label for="check_<%= $org->{key} %>" class="black-text">
-                        <span class="card-title"><%= $org->{name} %></span>
-                    </label>
+                    <span class="card-title"><%= $org->{name} %></span>
                     <p><%= $org->{motto} %></p>
                 </div>
               </div>
@@ -60,10 +53,9 @@
 
       <h2>Kalender bestellen</h2>
       <p class="flow-text">
-      Wir produzieren den Kalender entsprechend der Nachfrage. Unsere
-      Auftrag an die Druckerei geht am 15.&nbsp;November raus. Bestellen Sie Ihr Exemplar online über dieses Webformular (Zahlung per Kreditkarte) oder persönlich in der
+      Bestellen Sie Ihr Exemplar online über dieses Webformular (Zahlung per Kreditkarte) oder persönlich in der
       <a href="https://goo.gl/maps/Th5qRVrm4CT2" target="_new">Buchhandlung Klosterplatz</a>.
-      Die Auslieferung erfolgt Anfang Dezember.
+      Die Auslieferung erfolgt nach der Vernissage vom 3. Dezember 2016.
       </p>
 
       <div class="row"><div class="col s12"><div class="card"><div class="card-content row">

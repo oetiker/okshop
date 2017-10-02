@@ -1,0 +1,56 @@
+% layout 'default';
+% title 'Bildeingaben';
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h1>Bildeingaben für den Oltner Kalender 2018</h1>
+
+            <p class="flow-text">
+		Eure Bildspenden für den Oltner Kalender 2017 haben sich
+	    gelohnt: Wir konnten, nach Abzug der Fremdkosten, 80 Prozent der Einnahmen,
+            das sind 15'481 Franken, auf die 19 Begünstigten verteilen.  Ganz herzlichen
+            Dank für euer Engagement. </p>
+
+	    <p class="flow-text">
+		Auch die zweite Auflage wird zwei Kalenderblätter pro Monat
+	    enthalten.  Das bedeutet: Wer die Frontseite aufhängt, hat eher klassische
+	    Stadtansichten vor Augen während die jeweilige Rückseite mehr nähere
+	    Aufnahmen und Stimmungsbilder zeigt, zum Beispiel vom Schulfest, von der
+	    Fasnacht, vom Nebel – da könnt ihr richtig neugierig und kreativ sein. 
+	    Dieses Wechselspiel der Sichten soll bei der zweiten Ausgabe noch klarer zum
+	    Ausdruck kommen. </p>
+
+	    <p class="flow-text">
+		Bitte schickt uns eure Bildeingaben via <a target="_new" href="https://wetransfer.com">Wetransfer.com</a>
+            an die Adresse <a href="mailto:submission@oltner-kalender.ch">submission@oltner-kalender.ch</a>.</p>
+
+	    <p class="flow-text">
+		Mit der Eingabe eurer Bilder stimmt Ihr zu, dass Ihr der/die
+	    AutorIn der Bilder sind, die Rechte für die Veröffentlichung besitzt und wir
+	    die Bilder für den Kalender verwenden dürfen.</p>
+
+	    <p class="flow-text">Vergesst nicht eure Kontaktdaten anzugeben:</p>
+		<ul class="browser-default flow-text">
+			<li>Name/Vorname</li>
+			<li>Mail</li>
+			<li>Allfällige Website</li>
+		</ul>
+
+	    <p class="flow-text">Formale Kriterien</p>
+	        <ul class="browser-default flow-text">
+			<li>Nur Querformat</li>
+			<li>Dateiformat: tif / raw / jpg (Wenn vorhanden, sendet uns bitte die RAW Datei bei der Eingabe mit.)</li>
+			<li>Bilder mit moderneren Smartphones können von den Bilddaten noch reichen,  ideal für das A3-Format ist aber eine Auflösung ungefähr 16mpx, 5000 x 3500
+			px.</li>
+			<li>Wenn Menschen prominent abgebildet werden, dann klärt bitte das Einverständnis der betroffenen Personen und die Bildrechte ab und teilt uns die bei der Eingabe mit. (Werden Menschen in einer Übersichtsaufnahme und in öffentlicher Situation nur klein abgebildet, ist das kein
+			Problem)</li>
+	        </ul>
+	    <p class="flow-text">
+		Bildspenden nehmen wir bis zum 20. Oktober 2017 entgegen.</p>
+
+	    <p class="flow-text">Vielen lieben Dank,<br/>
+	    Tobi, Kurt &amp; Florian</p>
+        </div>
+    </div>
+</div>

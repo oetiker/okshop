@@ -19,22 +19,7 @@ has log => sub {
 };
 
 
-my $packaging = {
-    50 => 1.05,
-    100=> 1.12,
-    200=> 1.05,
-    500=> 0.99,    
-};
-
-my $printing = {
-    100 => 742,
-    250 => 1736,
-    500 => 2204,
-    750 => 2671,
-    1000 => 3273,
-    1500 => 4255
-};
-
+my $total2016 = 15500;
 sub statsPage {
     my $c = shift;
     my $app = $c->app;
@@ -43,58 +28,70 @@ sub statsPage {
         'SELECT * FROM ord;'
     )->hashes;
 
+# extra shopped
+    unshift @$table,
+        { ord_count => 10, ord_orgs => '["vw"]'},
+        { ord_count => 5, ord_orgs => '["so"]'},
+        { ord_count => 2, ord_orgs => '["bzcult","cs"]'},
+        { ord_count => 2, ord_orgs => '["po"]'},
+        { ord_count => 1, ord_orgs => '["vw"]'},
+        { ord_count => 1, ord_orgs => '["tto"]'},
+        { ord_count => 1, ord_orgs => '["po"]'},
+        { ord_count => 1, ord_orgs => '["gm"]'},
+        { ord_count => 2, ord_orgs => '["po","st"]'},
+        { ord_count => 2, ord_orgs => '["erni","so"]'},
+        { ord_count => 1, ord_orgs => '["tto"]'},
+        { ord_count => 2, ord_orgs => '["gm","vw"]'},
+        { ord_count => 1, ord_orgs => '["ernie","po","vw"]'},
+        { ord_count => 1, ord_orgs => '["ikubo"]'},
+        { ord_count => 1, ord_orgs => '["gpou"]'},
+        { ord_count => 1, ord_orgs => '["oiw"]'},
+        { ord_count => 1, ord_orgs => '["tto"]'},
+        { ord_count => 1, ord_orgs => '["bzcult","gpou","pko","tj"]'},
+        { ord_count => 1, ord_orgs => '["gm"]'},
+        { ord_count => 1, ord_orgs => '["bzcult"]'},
+        { ord_count => 1, ord_orgs => '["so"]'},
+        { ord_count => 1, ord_orgs => '["vw"]'};
+
+
     my $orders = $table->size;
 
     my $calendars = $table->reduce(sub {
         $a + $b->{ord_count} 
     },0);
 
-    my $printcost;
-    for my $count (sort {$a <=> $b} keys %$printing){
-        $printcost = $printing->{$count};
-        last if $count > $calendars;        
-    }
-    #warn "Printing Cost $printcost\n";
-    my $packprice;
-    for my $count (sort {$b <=> $a} keys %$packaging){
-        $packprice = $packaging->{$count};
-        last if $count > $calendars;
-    }
-    my $packcost = ceil($calendars / 50) * 50 * $packprice; 
-    #warn "Packing Cost $packcost\n";
-    my $cardcost = 50 * 0.029 + 0.3;
 
-    my $cost = $printcost + $packcost + $calendars * $cardcost;
-    
-    $c->stash('cost',$cost);
-    
- #  my $free = $calendars * 50 - $cost;
- 
-    my $free = $calendars * 38;
-            
+
+
+    my $part_cal = 0;
     my $dist = $table->reduce(sub {
         my $orgs = decode_json($b->{ord_orgs});
-        my $part = $b->{ord_count} / (scalar @$orgs);
-        for my $org (@$orgs){
+        if (@$orgs){
+          $part_cal += $b->{ord_count};
+          my $part = $b->{ord_count} / (scalar @$orgs);
+          for my $org (@$orgs){
             $a->{$org} += $part;
+          }
         }
         $a;
     },{});
-    
     my @table;
     
+    my $sum = 0;
     for my $org (sort { lc $a->{name} cmp lc $b->{name} } @{$cfg->{ORGANISATIONS}}) {
-        my $part = ($dist->{$org->{key}} // 0)/$calendars;
+        my $part = ($dist->{$org->{key}} // 0)/$part_cal;
         my @row = (
             $org->{name},
             sprintf("%.1f%%",$part*100),
-            sprintf("%.0f CHF",$free*$part)
+            sprintf("%.0f CHF",$total2016*$part)
         );
+        $sum += int($total2016*$part+0.5);
         push @table,\@row
     };
     $c->stash('table',\@table);
     $c->stash('orders',$orders);
     $c->stash('calendars',$calendars);    
+    $c->stash('sum',$sum );
     return $c->render('stats');
 }
 

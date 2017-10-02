@@ -118,11 +118,11 @@ sub checkDataHelper {
     my $c = shift;
     my $data = $c->data;
 
-    if (not @{$data->{orgs}}){
-        die [
-            'Wählen Sie welche Organisationen mit ihrem Anteil des Gewinns unterstützt werden sollen.'
-        ];
-    }
+#    if (not @{$data->{orgs}}){
+#        die [
+#            'Wählen Sie welche Organisationen mit ihrem Anteil des Gewinns unterstützt werden sollen.'
+#        ];    
+#    }
 
     for my $key (@addr){
         if (not $data->{addr}{$key}){
@@ -316,6 +316,7 @@ sub sendConfirmation {
     my $meta = shift;
     my $cfg = $c->cfg;
     $c->stash('d',$c->data);
+    $c->stash('login',$c->session('login'));
     $c->stash('cost_calendar',$c->calendar);
     $c->stash('cost_porto',$c->porto);
     $c->stash('cost_total',$c->amount);

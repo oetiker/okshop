@@ -9,7 +9,9 @@ Kalenderbestellung #<%= $id %>
 %= sprintf "%2d  %-40s %3d CHF", 1, $d->{delivery} eq 'collect' ? "Abholen in der Buchhandlung Klosterplatz" : "Lieferung per Post", $cost_porto
 %= sprintf "%44s %3d CHF ","Total",$cost_total
 
-Den Totalbetrag haben wir danken erhalten. <%= $source ? "Zahlungsmittel: $source." : '' %>
+% if (!$login) {
+Den Totalbetrag haben wir dankend erhalten. <%= $source ? "Zahlungsmittel: $source." : '' %>
+% }
 
 Adresse
 -------
@@ -22,14 +24,14 @@ Adresse
 %= "$d->{addr}{zip} $d->{addr}{town}"
 %= "$d->{addr}{country}"
 
-Unterstützung
--------------
+%# Unterstützung
+%# -------------
 
-Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:
+%# Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:
 
-% for my $org (@$orgs) {
-* <%= $org %>
-% }
+%# % for my $org (@$orgs) {
+%# * <%= $org %>
+%# % }
 
 Mit freundlichen Grüssen
 das Oltnerkalenderbestellsystem

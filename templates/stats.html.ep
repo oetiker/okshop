@@ -4,13 +4,17 @@
 <div class="container">
     <h1>Statistik</h1>
     <div class="row">
-	<div class="col s12 m6"><div class="card-panel" style="position: relative">
+	<div class="col s12 l4"><div class="card-panel" style="position: relative">
 	  Aufträge eingegangen
 	  <span class="badge"><%= $orders %></span>
         </div></div>
-	<div class="col s12 m6"><div class="card-panel" style="position: relative">
-	  Kalender bestellt
+	<div class="col s12 l4"><div class="card-panel" style="position: relative">
+	  Kalender vorbestellt
 	  <span class="badge"><%= $calendars %></span>
+        </div></div>
+	<div class="col s12 l4"><div class="card-panel" style="position: relative">
+	  Geld verteilt
+	  <span class="badge"><%= $sum %> CHF</span>
         </div></div>
 %#	<div class="col s12 m4"><div class="card-panel" style="position: relative">
 %#	  Kosten pro Kalender

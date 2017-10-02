@@ -1,0 +1,46 @@
+% layout 'default';
+% title 'Begünstigte';
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+            <h1>Als Organisation vom Oltner Kalender profitieren</h1>
+
+            <p class="flow-text">
+		Auch beim Kauf des Oltner Kalender 2018 wird man entscheiden
+		können welche Organisationen vom Gewinn des Projektes profitieren sollen.
+		Wir haben uns entschieden dieses Jahr die Auswahl auf 18
+		Organisationen zu beschränken. Dabei werden 15
+		Organisationen durch einen Popularitätswettbewerb auf
+		Facebook bestimmt und drei werden durch die Jury als Wildcards
+		gewählt. </p>
+
+	    <p class="flow-text">
+		Wenn du mit deiner Organisation beim Kalender 2018 mit auf
+		der Auswahlliste stehen möchtest, sende eine Mail an
+<a
+href="mailto:beneficiary@oltner-kalender.ch">beneficiary@oltner-kalender.ch</a> mit folgenden Angaben:</p>
+
+	    <ul class="browser-default flow-text">
+		<li>Name deiner Organisation</li>
+		<li>Eure Webadresse</li>
+		<li>Ein Logo im Format 1024x1024 Pixel</li>
+		<li>Ein Themenbild im Format 2000x1333 Pixel</li>
+		<li>200 Zeichen wie ihr zur Attraktivität von Olten beitragt?</li>
+		<li>Die IBAN Nummer eures Bankkontos</li>
+		<li>Die Bezeichnung zu eurem Konto</li>
+	    </ul>
+
+	    <p class="flow-text">
+		Organisationen können sich bis zum 13. Oktober 2017 anmelden.
+	    Vom 14. bis zum 20. Oktober 2017 werden die Logos aller
+	    Organisationen die sich beworben haben in einem Album auf unserer
+	    Facebookpage präsentiert. Die 15 Organisationen mit den meisten Likes sind
+	    automatisch mit dabei. Unter den übrigen wird die Jury noch drei Wildcards
+	    verteilen.</p>
+
+	    <p class="flow-text">Vielen lieben Dank,<br/>
+	    Florian, Kurt &amp; Tobi</p>
+        </div>
+    </div>
+</div>
