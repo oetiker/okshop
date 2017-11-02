@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Oltner Kalender 2017 Bestellbestätigug</title>
+        <title>Oltner Kalender 2018 Bestellbestätigug</title>
         <style>
         html, body {
             font-family: sans-serif;
@@ -34,18 +34,27 @@
         <div>Olten, <%= POSIX::strftime("%d.%m.%Y %H:%M:%S",localtime(time)) %></div>
 
         <h1>Kalenderbestellung #<%= $id %></h1>
+% my $ship = "Lieferung per Post";
+% if ($d->{delivery} =~ /^klp/){
+%    $ship = "Abholen in der Buchhandlung Klosterplatz";
+% } elsif ($d->{delivery} =~ /^bhs/){
+%    $ship = "Abholen in der Buchhandlung Schreiber";
+% }
+% if ($d->{delivery} =~ /_tt$/){
+%    $ship .= " + Tragtasche";
+% } elsif ($d->{delivery} =~ /_gp$/){
+%    $ship .= " + Geschenkverpackung";
+% }
 
         <table>
             <tr>
                 <td><%= $d->{calendars} %></td>
-                <td>Oltner Kalender 2017</td>
+                <td>Oltner Kalender 2018</td>
                 <td><%= $cost_calendar %> CHF</td>
             </tr>
             <tr>
-                <td>1</td>
-                <td><%= $d->{delivery} eq 'collect'
-                    ? "Abholen in der Buchhandlung Klosterplatz"
-                    : "Lieferung per Post" %> </td>
+                <td></td>
+                <td><%= $ship %></td>
                 <td><%= $cost_porto %> CHF</td>
             </tr>
             <tr>
@@ -70,15 +79,14 @@
             <%= "$d->{addr}{country}" %>
         </address>
 
-%#        <h2>Unterstützung</h2>
+        <h2>Unterstützung</h2>
 
-%#        <p>Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:</p>
-%#
-%#        <ul>
-%#        % for my $org (@$orgs) {
-%#            <li><%= $org %></li>
-%#        % }
-%#       </ul>
+        <p>Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:</p>
+        <ul>
+        % for my $org (@$orgs) {
+            <li><%= $org %></li>
+        % }
+        </ul>
 
         <p>Das Oltnerkalenderbestellsystem<br/>
         <a href="https://www.oltner-kalender.ch">www.oltner-kalender.ch</a>

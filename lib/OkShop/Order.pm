@@ -38,9 +38,15 @@ has porto => sub {
     if ($data->{delivery} eq 'ship'){
         my $charge = 12 * int($data->{calendars} / 3 + 1);
         if ($data->{addr}{country} =~ /^(schweiz|switzerland|ch|suisse|svizzera)$/i){
-            $charge = 9 * int($data->{calendars} / 10 + 1);
+            $charge = 9 * int($data->{calendars} / 3 + 1);
         }
         return $charge;
+    }
+    if ($data->{delivery} =~ /_tt$/){
+        return 2 * $data->{calendars};
+    }
+    if ($data->{delivery} =~ /_gp$/){
+        return 7 * $data->{calendars};
     }
     return 0;
 };
@@ -79,13 +85,14 @@ my %addr = (
    "email" => "ihre eMail Adresse",
    "first_name" => "den Vornamen",
    "last_name" => "den Nachnamen",
+   "company" => "den Firmennamen",
    "street" => "die Strasse",
    "nr" => "die Hausnummer",
    "town" => "die Ortschaft",
    "zip" => "die Postleitzahl",
 );
 
-my @adrCheckerRules = qw(TownValid ZipValid StreetValid HouseNbrValid);# NameCurrentlyValid NameFirstNameCurrentlyValid );
+my @adrCheckerRules = qw(TownValid ZipValid StreetValid HouseNbrValid NameCurrentlyValid NameFirstNameCurrentlyValid );
 
 my %adrCheckerRules = (
     NameCurrentlyValid => {
@@ -118,11 +125,11 @@ sub checkDataHelper {
     my $c = shift;
     my $data = $c->data;
 
-#    if (not @{$data->{orgs}}){
-#        die [
-#            'Wählen Sie welche Organisationen mit ihrem Anteil des Gewinns unterstützt werden sollen.'
-#        ];    
-#    }
+   if (not @{$data->{orgs}}){
+       die [
+           'Wählen Sie welche Organisationen mit ihrem Anteil des Gewinns unterstützt werden sollen.'
+        ];    
+   }
 
     for my $key (@addr){
         if (not $data->{addr}{$key}){
@@ -141,8 +148,13 @@ sub checkDataHelper {
                 SearchLanguage => 1,
                 SearchType => 1
             },
-            FirstName => $data->{addr}{first_name},
-            Name => $data->{addr}{last_name},
+            $data->{addr}{company} ? (
+                FirstName => '',
+                Name => $data->{addr}{company} )
+            : (
+                FirstName => $data->{addr}{first_name},
+                Name => $data->{addr}{last_name},
+            ),
             Street => $data->{addr}{street},
             HouseNbr => $data->{addr}{nr},
             Zip => $data->{addr}{zip},
@@ -153,6 +165,12 @@ sub checkDataHelper {
         $c->log->debug($c->app->dumper($check));
         if (my $ck = $check->{Body}{rows}[0]){
             for my $key (@adrCheckerRules){
+                if ($data->{addr}{company} and not $ck->{NameCurrentlyValid}){
+                    die [
+                        "Firma ist an dieser Adresse unbekannt",
+                        "addr_company",
+                    ];
+                }
                 die [
                     $adrCheckerRules{$key}{msg},
                     $adrCheckerRules{$key}{fieldId}
@@ -214,7 +232,7 @@ INSERT INTO ord ( ord_product, ord_count,
     ord_meta, ord_orgs, ord_seller )
 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 SQL_END
-        'ok2017', $data->{calendars},
+        'ok2018', $data->{calendars},
         $data->{addr}{first_name},
         $data->{addr}{last_name},
         $data->{addr}{street}.' '. $data->{addr}{nr},
@@ -265,7 +283,7 @@ sub processCcPayment {
             $c->stripe->create_charge({
                 token => $data->{token},
                 amount => $amount * 100, #amount in rappen
-                description => 'Oltner Kalender 2017',
+                description => 'Oltner Kalender 2018',
                 currency => 'chf',
                 capture => 0,
                 metadata => {
@@ -334,7 +352,7 @@ sub sendConfirmation {
         ->OpenMultipart({
             to => $c->data->{addr}{email},
             bcc => $c->cfg->{GENERAL}{mailBcc},
-            subject => encode('MIME-Header',"Bestellbestätigung Oltner Kalender 2017 #$id"),
+            subject => encode('MIME-Header',"Bestellbestätigung Oltner Kalender 2018 #$id"),
             multipart => 'alternative',
         })
 

@@ -19,16 +19,18 @@ has log => sub {
 };
 
 
-my $total2016 = 15500;
+#my $total2016 = 15500;
+
 sub statsPage {
     my $c = shift;
     my $app = $c->app;
     my $cfg = $app->config->cfgHash;
     my $table = $app->sql->db->query(
-        'SELECT * FROM ord;'
+        q{SELECT * FROM ord WHERE ord_product = 'ok2018'}
     )->hashes;
 
 # extra shopped
+=pod
     unshift @$table,
         { ord_count => 10, ord_orgs => '["vw"]'},
         { ord_count => 5, ord_orgs => '["so"]'},
@@ -52,12 +54,16 @@ sub statsPage {
         { ord_count => 1, ord_orgs => '["bzcult"]'},
         { ord_count => 1, ord_orgs => '["so"]'},
         { ord_count => 1, ord_orgs => '["vw"]'};
-
+=cut
 
     my $orders = $table->size;
 
     my $calendars = $table->reduce(sub {
         $a + $b->{ord_count} 
+    },0);
+ 
+    my $total = $table->reduce(sub {
+        $a + $b->{ord_count} * 38 
     },0);
 
 
@@ -79,13 +85,13 @@ sub statsPage {
     
     my $sum = 0;
     for my $org (sort { lc $a->{name} cmp lc $b->{name} } @{$cfg->{ORGANISATIONS}}) {
-        my $part = ($dist->{$org->{key}} // 0)/$part_cal;
+        my $part = $part_cal ? ($dist->{$org->{key}} // 0)/ $part_cal : 0;
         my @row = (
             $org->{name},
             sprintf("%.1f%%",$part*100),
-            sprintf("%.0f CHF",$total2016*$part)
+            sprintf("%.0f CHF",$total*$part)
         );
-        $sum += int($total2016*$part+0.5);
+        $sum += int($total*$part+0.5);
         push @table,\@row
     };
     $c->stash('table',\@table);

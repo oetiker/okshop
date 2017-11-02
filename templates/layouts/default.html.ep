@@ -3,9 +3,10 @@
   <head>
     <meta property="og:site_name" content="Oltner Kalender"/>
     <meta property="og:url" content="https://www.oltner-kalender.ch" />
-    <meta property="og:image" content="https://www.oltner-kalender.ch/images/ok2017-01.jpg" />
+    <meta property="og:image" content="https://www.oltner-kalender.ch/images/ok2018-02.jpg" />
         <meta property="og:description" content="Ein Kalender mit den besten Fotografien von Olten, zugunsten von Projekten die Olten zu einer lebenswerten Stadt machen." />
     <meta property="og:title" content="Oltner Kalender Shop"/>
+    <meta property="og:type" content="website"/>
     <meta property="fb:app_id" content="1793474840937766"/>
     <title><%= title %> - Oltner Kalender</title>
     <!--Import Google Icon Font-->
@@ -34,34 +35,34 @@
   <nav>
     <div class="nav-wrapper grey">
       <div class="container">
-          <a href="<%= url_for './' %>" class="brand-logo">Oltner Kalender <span class="hide-on-small-only">2017</span> <%= $shopmode ? '('.$login.')' : '' %></a>
+          <a href="<%= url_for './' %>" class="brand-logo">Oltner Kalender <span class="hide-on-small-only">2018</span> <%= $shopmode ? '('.$login.')' : '' %></a>
 
           <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-%#          <li><a href="<%= url_for './' %>">Shop</a></li>
-%#            % if ($login) {
-%#                <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
-%#            % }
-%#           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
-           <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
-           <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
+          <li><a href="<%= url_for './' %>">Shop</a></li>
+            % if ($login) {
+                <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
+            % }
+           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+%#          <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
+%#         <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
            <li><a href="<%= url_for './about' %>">Über uns</a></li>
-%#           % if ($shopmode) {
-%#               <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
-%#           % }
+           % if ($shopmode) {
+               <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
+           % }
           </ul>
           <ul class="side-nav" id="mobile-menu">
-%#              <li><a href="<%= url_for './' %>">Shop</a></li>
-%#	      <li><a href="<%= url_for './stats' %>">Statistik</a></li>
-%#              % if ($login) {
-%#                  <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
-%#              % } 
-              <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
-              <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
+              <li><a href="<%= url_for './' %>">Shop</a></li>
+	      <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+              % if ($login) {
+                  <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
+              % } 
+%#            <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
+%#            <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
               <li><a href="<%= url_for './about' %>">Über uns</a></li>
-%#              % if ($shopmode) {
-%#                  <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
-%#              % }
+              % if ($shopmode) {
+                  <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
+              % }
           </ul>
       </div>
     </div>
@@ -81,9 +82,10 @@
           </div>
       <div class="footer-copyright">
         <div class="container">
-        © 2017 Oltner Kalender.
+        © 2017 Oltner Kalender
         </div>
       </div>
     </footer>
   </body>
 </html>
+

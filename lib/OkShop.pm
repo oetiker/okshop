@@ -158,9 +158,10 @@ sub startup {
     });
 
     $r->get('/about');
-    $r->get('/bildeingaben');
-    $r->get('/beguenstigte');
-    $r->get('/' => 'bildeingaben');
+#    $r->get('/bildeingaben');
+#    $r->get('/beguenstigte');
+#    $r->get('/' => 'bildeingaben');
+#    $r->get('/' => 'bildeingaben');
     
     $r->get('/login' => sub {
         my $c = shift;
@@ -176,13 +177,14 @@ sub startup {
         $c->redirect_to('.')
     });
 
-    $r->get('/xxxadfasf' => sub {
+    $r->get('/' => sub {
         my $c = shift;
         $c->stash('ORGANISATIONS' => $cfg->{ORGANISATIONS});
         $c->stash('home' => $app->home);
         $c->stash('stripePubKey' => $cfg->{GENERAL}{stripePubKey});
         # $c->render('order-phase2');
-        $c->render('no-order');
+        # $c->render('no-order');
+        $c->render('order');
     });
 
     $r->get('/list')->to( controller=>'List', action=>'orderList');

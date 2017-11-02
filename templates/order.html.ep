@@ -26,11 +26,9 @@
       <form id="orderform">
       <a name="order-start"></a>
       <p class="flow-text">
-      Mit dem Kauf des Oltner Kalenders 2017 unterstützen Sie die kulturelle Vielfalt in der Region Olten.
-      In der "Vorbestellphase" konnte gewählt werden wie die Einnahmen
-      verteilt werden. Nun da die Kalender Bestellung raus ist, werden wir
-      das Geld der weiteren Bestellungen entsprechend dem Verteilschlüssel
-      der vorhergehenden bestellungen verteilen.
+      Mit dem Kauf des Oltner Kalenders 2018 unterstützen Sie die kulturelle Vielfalt in der Region Olten.
+      Wählen sie, welche Organisationen von Gewinn aus ihrem Beitrag profitieren
+      sollen.
       </p>
 
       <div id="project-list" class="row">
@@ -60,10 +58,13 @@
 
       <h2>Kalender bestellen</h2>
       <p class="flow-text">
-      Wir produzieren den Kalender entsprechend der Nachfrage. Unsere
-      Auftrag an die Druckerei geht am 15.&nbsp;November raus. Bestellen Sie Ihr Exemplar online über dieses Webformular (Zahlung per Kreditkarte) oder persönlich in der
-      <a href="https://goo.gl/maps/Th5qRVrm4CT2" target="_new">Buchhandlung Klosterplatz</a>.
-      Die Auslieferung erfolgt Anfang Dezember.
+
+Wir produzieren den Kalender entsprechend der Nachfrage.  Unser Auftrag an
+die Druckerei geht am 15.  November raus.  Bestellen Sie Ihr Exemplar online
+über dieses Webformular (Zahlung per Kreditkarte).  Sie können Ihren
+Kalender bei der <a href="https://goo.gl/maps/Th5qRVrm4CT2" target="_new">Buchhandlung Klosterplatz</a> oder bei <a target="_new" href="https://goo.gl/maps/QVsN93J5PCQ2">Schreiber Kirchgasse</a>
+reservieren lassen.  Dann haben Sie jedoch keinen Einfluss auf die
+Geldverteilung.  Die Auslieferung erfolgt Anfang Dezember.
       </p>
 
       <div class="row"><div class="col s12"><div class="card"><div class="card-content row">
@@ -72,7 +73,7 @@
               <label for="order_count">Anzahl</label>
             </div>
             <div class="input-field fake-field col s8">
-              Oltner Kalender 2017, Format A3, 26 Bilder
+              Oltner Kalender 2018, Format A3, 26 Bilder
             </div>
             <div class="input-field fake-field col s2 right-align">
               <span class="cost_calendar"></span> CHF
@@ -132,15 +133,21 @@
       </div></div></div></div>
       <h2>Zustellung</h2>
       <p class="flow-text">
-      Der Kalender kann entweder in der Buchhandlung Klosterplatz abgeholt oder per Post geliefert werden.</p>
+      Der Kalender kann entweder in der Buchhandlung Klosterplatz oder in der Buchhandlung Schreiber
+      Kirchgasse abgeholt werden, oder per Post geliefert werden.</p>
       <div class="row"><div class="col s12"><div class="card"><div class="card-content row">
           <div class="input-field col s10">
               <select id="delivery">
-                <option value="" disabled selected>Wählen Sie die Zustellungsart</option>
-                <option value="collect">Abholen in der Buchhandlung Klosterplatz</option>
+                <option value="" disabled selected>Wählen Sie die Zustellungsart und Verpackung</option>
+                <option value="klp">Abholen Buchhandlung Klosterplatz</option>
+                <option value="klp_tt">Abholen Buchhandlung Klosterplatz + Tragtasche</option>
+                <option value="klp_gp">Abholen Buchhandlung Klosterplatz + Geschenkverpackung</option>
+                <option value="bhs">Abholen Schreiber Kirchgasse</option>
+                <option value="bhs_tt">Abholen Schreiber Kirchgasse + Tragtasche</option>
+                <option value="bhs_gp">Abholen Schreiber Kirchgasse + Geschenkverpackung</option>
                 <option value="ship">Zustellung per Post</option>
               </select>
-              <label for="delivery">Zustellung</label>
+              <label for="delivery">Zustellung/Verpackung</label>
           </div>
           <div class="input-field fake-field col s2 right-align">
               <span class="cost_porto"></span> CHF
@@ -173,7 +180,7 @@
   <div class="modal-content">
   </div>
   <div class="modal-footer">
-    <a id="error_ok" href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+    <a id="error_ok" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
   </div>
 </div>
 

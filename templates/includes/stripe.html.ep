@@ -1,10 +1,3 @@
-<div id="stripeerrorpop" class="modal">
-  <div class="modal-content">
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
-  </div>
-</div>
 
 <div id="payform" class="modal">
   <div class="modal-content">
@@ -31,12 +24,21 @@
         <label for="card_cvc">CVC</label>
       </div>
       <div class="col s12">
-        Kalender <span class="cost_calendar"></span>.00 CHF + Porto <span class="cost_porto"></span>.00 CHF =  <b><span class="cost_total"></span>.00 CHF</b>
+        Kalender <span class="cost_calendar"></span> CHF + Porto/Verpackung <span class="cost_porto"></span> CHF =  <b><span class="cost_total"></span> CHF</b>
         <button id="order_btn" class="right waves-effect waves-green btn">Bezahlen</button>
       </div>
     </div>
   </div>
 </div>
+
+<div id="stripeerrorpop" class="modal">
+  <div class="modal-content">
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+  </div>
+</div>
+
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script>Stripe.setPublishableKey('<%= $stripePubKey %>');</script>
 <script type="text/javascript" src="<%= url_for 'js/jquery.card.js' %>"></script>

@@ -1,8 +1,19 @@
 $(document).ready(function() {
     $('select').material_select();
-    $('.modal-trigger').leanModal();
+    $('.modal').modal();
     $(".button-collapse").sideNav();
-
+    var setPicHeight = function(){
+        var maxHeight = 0;
+        if ( $(window).width() < 601){
+            $('#project-list .card.horizontal').css('height','auto');
+            return;
+        }
+        $('#project-list .card.horizontal').css('height','auto').each(function(){
+            maxHeight = Math.max($(this).height(),maxHeight);
+        }).css('height',(maxHeight + 5) + 'px' );
+    };
+    setPicHeight();
+    $(window).on('resize',setPicHeight);
     var $pics = $('#pics');
     var picHeight = function(){
         return Math.floor($pics.width()/42*29.7);
@@ -128,26 +139,26 @@ $(document).ready(function() {
                     }
                     else {
                         $('#errorpop .modal-content').html('<h4>Unvollständige Information</h4><div class="flow-text">'+err.msg+'</div>');
-                        $('#errorpop').openModal();
+                        $('#errorpop').modal('open');
                     }
                     return;
                 }
                 if (msg.status == 'complete') {
-                    $('#thankyoupop').openModal({
+                    $('#thankyoupop').modal({
                         dismissible: false
-                    });
+                    }).modal('open');
                 }
                 else {
-                    $('#payform').openModal({
+                    $('#payform').modal({
                         dismissible: false
-                    });
+                    }).modal('open');
                 }
             },
             error: function(xhr,status){
                 hideBusy();
                 $('#errorpop .modal-content')
                     .html('<h4>Error</h4><p class="flow-text">'+status+'</p>');
-                $('#errorpop').openModal();
+                $('#errorpop').modal('open');
                 return;
             }
         });
@@ -177,19 +188,19 @@ $(document).ready(function() {
                     }
                     else {
                         $('#errorpop .modal-content').html('<h4>Unvollständige Information</h4><p class="flow-text">'+err.msg+'</p>');
-                        $('#errorpop').openModal();
+                        $('#errorpop').modal('open');
                     }
                     return;
                 }
-                $('#thankyoupop').openModal({
+                $('#thankyoupop').modal({
                     dismissible: false
-                });
+                }).modal('open');
             },
             error: function(xhr,status){
                 hideBusy();
                 $('#errorpop .modal-content')
                     .html('<h4>Error</h4><p class="flow-text">'+status+'</p>');
-                $('#errorpop').openModal();
+                $('#errorpop').modal('open');
                 return;
             }
         });
@@ -212,7 +223,8 @@ $(document).ready(function() {
                 hideBusy();
                 $('#stripeerrorpop .modal-content').html('<h4>Card Validation Problem</h4>'
                 +'<p class="flow-text">'+response.error.message+'</p>');
-                $('#stripeerrorpop').openModal();
+                $('#payform').modal('close');
+                $('#stripeerrorpop').modal('open');
                 return;
             }
             formData['token'] = response.id;
@@ -224,23 +236,23 @@ $(document).ready(function() {
                 success: function(msg){
                     var err;
                     hideBusy();
-                    $('#payform').closeModal();
+                    $('#payform').modal('close');
                     if (err = msg.error){
                         $('#errorpop .modal-content')
                             .html('<h4>Unvollständige Information</h4><p class="flow-text">'+err.msg+'</p>');
-                        $('#errorpop').openModal();
+                        $('#errorpop').modal('open');
                         return;
                     }
-                    $('#thankyoupop').openModal({
+                    $('#thankyoupop').modal({
                         dismissible: false
-                    });
+                    }).modal('open');
                     return;
                 },
                 error: function(xhr,status){
                     hideBusy();
                     $('#errorpop .modal-content')
                         .html('<h4>Error</h4><p class="flow-text">'+status+'</p>');
-                    $('#errorpop').openModal();
+                    $('#errorpop').modal('open');
                     return;
                 }
             });
