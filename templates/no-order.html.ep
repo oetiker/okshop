@@ -26,10 +26,15 @@
       <form id="orderform">
       <a name="order-start"></a>
       <p class="flow-text">
-      Mit dem Kauf des Oltner Kalenders 2017 unterstützen Sie die kulturelle Vielfalt in der Region Olten. 
-      Wenn sie den Kalender bestellt haben, können sie ihn nun in der <a href="https://goo.gl/maps/Th5qRVrm4CT2" target="_new">Buchhandlung Klosterplatz</a>
-      abholen. Einige Exemplare liegen auch noch bereit für Leute die keine
-      Vorbestellungen gemacht haben.
+
+Mit dem Kauf des Oltner Kalenders unterstützen Sie die kulturelle Vielfalt
+in der Region Olten.  Wenn sie einen Kalender bestellt haben können sie ihn je nach
+bestellung bei der <a href="https://goo.gl/maps/Th5qRVrm4CT2"
+target="_new">Buchhandlung Klosterplatz</a> oder bei <a target="_new"
+href="https://goo.gl/maps/QVsN93J5PCQ2">Schreiber Kirchgasse</a> abholen. 
+Einige Exemplare liegen auch noch bereit für Leute die keine Vorbestellungen
+gemacht haben.
+
       </p>
 
       <div id="project-list" class="row">

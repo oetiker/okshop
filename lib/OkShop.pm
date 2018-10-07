@@ -158,10 +158,9 @@ sub startup {
     });
 
     $r->get('/about');
-#    $r->get('/bildeingaben');
-#    $r->get('/beguenstigte');
-#    $r->get('/' => 'bildeingaben');
-#    $r->get('/' => 'bildeingaben');
+    $r->get('/bildeingaben');
+    $r->get('/beguenstigte');
+    $r->get('index.html' => 'bildeingaben');
     
     $r->get('/login' => sub {
         my $c = shift;
@@ -177,23 +176,23 @@ sub startup {
         $c->redirect_to('.')
     });
 
-    $r->get('/' => sub {
-        my $c = shift;
-        $c->stash('ORGANISATIONS' => $cfg->{ORGANISATIONS});
-        $c->stash('home' => $app->home);
-        $c->stash('stripePubKey' => $cfg->{GENERAL}{stripePubKey});
-        # $c->render('order-phase2');
-        # $c->render('no-order');
-        $c->render('order');
-    });
+#    $r->get('/' => sub {
+#        my $c = shift;
+#        $c->stash('ORGANISATIONS' => $cfg->{ORGANISATIONS});
+#        $c->stash('home' => $app->home);
+#        $c->stash('stripePubKey' => $cfg->{GENERAL}{stripePubKey});
+#        #$c->render('order-phase2');
+#        $c->render('no-order');
+        #$c->render('order');
+#    });
 
-    $r->get('/list')->to( controller=>'List', action=>'orderList');
-    $r->get('/stats')->to( controller=>'Stats', action=>'statsPage');
+#    $r->get('/list')->to( controller=>'List', action=>'orderList');
+#    $r->get('/stats')->to( controller=>'Stats', action=>'statsPage');
 
-    $r->post('/get-cost')->to( controller=>'Order', action=>'getCost');
-    $r->post('/check-data')->to( controller=>'Order', action=>'checkData');
-    $r->post('/process-cc-payment')->to( controller=>'Order', action=>'processCcPayment');
-    $r->post('/process-shop-payment')->to( controller=>'Order', action=>'processShopPayment');
+#    $r->post('/get-cost')->to( controller=>'Order', action=>'getCost');
+#    $r->post('/check-data')->to( controller=>'Order', action=>'checkData');
+#    $r->post('/process-cc-payment')->to( controller=>'Order', action=>'processCcPayment');
+#    $r->post('/process-shop-payment')->to( controller=>'Order', action=>'processShopPayment');
 
 }
 

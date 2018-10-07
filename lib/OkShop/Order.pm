@@ -92,17 +92,17 @@ my %addr = (
    "zip" => "die Postleitzahl",
 );
 
-my @adrCheckerRules = qw(TownValid ZipValid StreetValid HouseNbrValid NameCurrentlyValid NameFirstNameCurrentlyValid );
+my @adrCheckerRules = qw(TownValid ZipValid StreetValid HouseNbrValid ); # NameCurrentlyValid NameFirstNameCurrentlyValid );
 
 my %adrCheckerRules = (
-    NameCurrentlyValid => {
-        fieldId=>'addr_last_name',
-        msg=>'Name ist an dieser Adresse unbekannt.'
-    },
-    NameFirstNameCurrentlyValid => {
-        fieldId=>'addr_first_name',
-        msg=>'Vorname ist an dieser Adresse unbekannt.'
-    },
+#    NameCurrentlyValid => {
+#        fieldId=>'addr_last_name',
+#        msg=>'Name ist an dieser Adresse unbekannt.'
+#    },
+#    NameFirstNameCurrentlyValid => {
+#        fieldId=>'addr_first_name',
+#        msg=>'Vorname ist an dieser Adresse unbekannt.'
+#    },
     StreetValid => {
         fieldId=>'addr_street',
         msg=>'Strasse ist unbekannt.'
@@ -165,12 +165,12 @@ sub checkDataHelper {
         $c->log->debug($c->app->dumper($check));
         if (my $ck = $check->{Body}{rows}[0]){
             for my $key (@adrCheckerRules){
-                if ($data->{addr}{company} and not $ck->{NameCurrentlyValid}){
-                    die [
-                        "Firma ist an dieser Adresse unbekannt",
-                        "addr_company",
-                    ];
-                }
+#                if ($data->{addr}{company} and not $ck->{NameCurrentlyValid}){
+#                    die [
+#                        "Firma ist an dieser Adresse unbekannt",
+#                        "addr_company",
+#                    ];
+#                }
                 die [
                     $adrCheckerRules{$key}{msg},
                     $adrCheckerRules{$key}{fieldId}

@@ -35,30 +35,30 @@
   <nav>
     <div class="nav-wrapper grey">
       <div class="container">
-          <a href="<%= url_for './' %>" class="brand-logo">Oltner Kalender <span class="hide-on-small-only">2018</span> <%= $shopmode ? '('.$login.')' : '' %></a>
+          <a href="<%= url_for './' %>" class="brand-logo">Oltner Kalender <span class="hide-on-small-only">2019</span> <%= $shopmode ? '('.$login.')' : '' %></a>
 
           <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="<%= url_for './' %>">Shop</a></li>
+%#          <li><a href="<%= url_for './' %>">Shop</a></li>
             % if ($login) {
                 <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
             % }
-           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
-%#          <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
-%#         <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
+%#         <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+           <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
+           <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
            <li><a href="<%= url_for './about' %>">Über uns</a></li>
            % if ($shopmode) {
                <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
            % }
           </ul>
           <ul class="side-nav" id="mobile-menu">
-              <li><a href="<%= url_for './' %>">Shop</a></li>
-	      <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+%#            <li><a href="<%= url_for './' %>">Shop</a></li>
+%#	      <li><a href="<%= url_for './stats' %>">Statistik</a></li>
               % if ($login) {
                   <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
               % } 
-%#            <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
-%#            <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
+              <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
+              <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
               <li><a href="<%= url_for './about' %>">Über uns</a></li>
               % if ($shopmode) {
                   <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
@@ -82,7 +82,7 @@
           </div>
       <div class="footer-copyright">
         <div class="container">
-        © 2017 Oltner Kalender
+        © 2018 Oltner Kalender
         </div>
       </div>
     </footer>
