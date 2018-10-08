@@ -26,7 +26,7 @@ sub statsPage {
     my $app = $c->app;
     my $cfg = $app->config->cfgHash;
     my $table = $app->sql->db->query(
-        q{SELECT * FROM ord WHERE ord_product = 'ok2018'}
+        q{SELECT * FROM ord WHERE ord_product = 'ok2019'}
     )->hashes;
 
 # extra shopped

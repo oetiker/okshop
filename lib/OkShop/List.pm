@@ -53,7 +53,7 @@ sub orderList {
     my $app = $c->app;
 
     my $table = $app->sql->db->query(
-        q{SELECT * FROM ord where ord_seller = ? and ord_product = 'ok2018'},
+        q{SELECT * FROM ord where ord_seller = ? and ord_product = 'ok2019'},
         $c->session('login')
     );
     $c->stash('table', $table);

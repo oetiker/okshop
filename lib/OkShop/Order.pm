@@ -232,7 +232,7 @@ INSERT INTO ord ( ord_product, ord_count,
     ord_meta, ord_orgs, ord_seller )
 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 SQL_END
-        'ok2018', $data->{calendars},
+        'ok2019', $data->{calendars},
         $data->{addr}{first_name},
         $data->{addr}{last_name},
         $data->{addr}{street}.' '. $data->{addr}{nr},

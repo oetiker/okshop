@@ -1,4 +1,4 @@
 #!/bin/sh
 rsync --archive lib etc public templates oltcal@james:okshop
-ssh oltcal@james pkill -f okshop
-ssh oltcal@james /home/oltcal/okshop/bin/start.sh
+ssh oltcal@freddie pkill -f okshop
+ssh oltcal@freddie exec /home/oltcal/okshop/bin/start.sh
