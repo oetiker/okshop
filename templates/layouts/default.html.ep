@@ -3,7 +3,7 @@
   <head>
     <meta property="og:site_name" content="Oltner Kalender"/>
     <meta property="og:url" content="https://www.oltner-kalender.ch" />
-    <meta property="og:image" content="https://www.oltner-kalender.ch/images/ok2018-02.jpg" />
+    <meta property="og:image" content="https://www.oltner-kalender.ch/images/181030_OK2019_small01.jpg" />
         <meta property="og:description" content="Ein Kalender mit den besten Fotografien von Olten, zugunsten von Projekten die Olten zu einer lebenswerten Stadt machen." />
     <meta property="og:title" content="Oltner Kalender Shop"/>
     <meta property="og:type" content="website"/>
@@ -39,12 +39,12 @@
 
           <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-%#          <li><a href="<%= url_for './' %>">Shop</a></li>
+%#           <li><a href="<%= url_for './' %>">Shop</a></li>
             % if ($login) {
                 <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
             % }
-%#         <li><a href="<%= url_for './stats' %>">Statistik</a></li>
-           <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
+%#           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+         <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
            <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
            <li><a href="<%= url_for './about' %>">Über uns</a></li>
            % if ($shopmode) {
@@ -53,7 +53,7 @@
           </ul>
           <ul class="side-nav" id="mobile-menu">
 %#            <li><a href="<%= url_for './' %>">Shop</a></li>
-%#	      <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+%#           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
               % if ($login) {
                   <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
               % } 
@@ -75,14 +75,14 @@
                 <p class="grey-text text-lighten-4">Der Verein Oltner Kalender besteht aus <a class="goOP"
                         href="https://tobi.oetiker.ch">Tobias Oetiker</a>,
                         <a href="http://www.kurtschibler.ch/">Kurt
-                        Schibler</a> und <a href="http://florianamoser.ch/">Florian
-                        Amoser</a>. Kontakt:&nbsp;tobi@oetiker.ch</p>
+                        Schibler</a>, <a href="http://florianamoser.ch/">Florian
+                        Amoser</a> und Johanna Nyfeler. Kontakt:&nbsp;tobi@oetiker.ch</p>
               </div>
             </div>
           </div>
       <div class="footer-copyright">
         <div class="container">
-        © 2018 Oltner Kalender
+        © 2019 Oltner Kalender
         </div>
       </div>
     </footer>

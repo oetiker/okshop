@@ -66,7 +66,6 @@ $(document).ready(function() {
 
     var getFormData = function(){
         var data = {
-            orgs: [],
             addr: {}
         };
         $('form#orderform input, form#orderform select').each(function(){
@@ -83,6 +82,9 @@ $(document).ready(function() {
                 return;
             }
             if (match = id.match(/^check_(\S+)/)){
+                if (!data.orgs){
+                    data.orgs = [];
+                }
                 if ($this.prop('checked')){
                     data.orgs.push(match[1]);
                 }

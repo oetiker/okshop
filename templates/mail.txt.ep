@@ -16,7 +16,7 @@ Kalenderbestellung #<%= $id %>
 %    $ship .= " + Geschenkverpackung";
 % }
 
-%= sprintf "%2d  %-40s %3d CHF", $d->{calendars} ,"Oltner Kalender 2018", $cost_calendar
+%= sprintf "%2d  %-40s %3d CHF", $d->{calendars} ,"Oltner Kalender 2020", $cost_calendar
 %= sprintf "%2d  %-40s %3d CHF", 1, $ship, $cost_porto
 %= sprintf "%44s %3d CHF ","Total",$cost_total
 
@@ -35,6 +35,9 @@ Adresse
 %= "$d->{addr}{zip} $d->{addr}{town}"
 %= "$d->{addr}{country}"
 
+
+% if (@$orgs){
+
 Unterstützung
 -------------
 
@@ -44,6 +47,7 @@ Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:
 * <%= $org %>
 % }
 
+% }
 Mit freundlichen Grüssen
 das Oltnerkalenderbestellsystem
 

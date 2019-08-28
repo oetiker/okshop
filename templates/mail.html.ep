@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Oltner Kalender 2018 Bestellbestätigug</title>
+        <title>Oltner Kalender Bestellbestätigung</title>
         <style>
         html, body {
             font-family: sans-serif;
@@ -49,7 +49,7 @@
         <table>
             <tr>
                 <td><%= $d->{calendars} %></td>
-                <td>Oltner Kalender 2018</td>
+                <td>Oltner Kalender 2020</td>
                 <td><%= $cost_calendar %> CHF</td>
             </tr>
             <tr>
@@ -79,6 +79,7 @@
             <%= "$d->{addr}{country}" %>
         </address>
 
+% if (@$orgs) {
         <h2>Unterstützung</h2>
 
         <p>Der Gewinn aus Ihrer Bestellung wird unter folgenden Organisationen aufgeteilt:</p>
@@ -87,6 +88,7 @@
             <li><%= $org %></li>
         % }
         </ul>
+% }
 
         <p>Das Oltnerkalenderbestellsystem<br/>
         <a href="https://www.oltner-kalender.ch">www.oltner-kalender.ch</a>

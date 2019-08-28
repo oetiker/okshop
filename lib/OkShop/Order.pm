@@ -43,10 +43,10 @@ has porto => sub {
         return $charge;
     }
     if ($data->{delivery} =~ /_tt$/){
-        return 2 * $data->{calendars};
+        return 1.5 * $data->{calendars};
     }
     if ($data->{delivery} =~ /_gp$/){
-        return 7 * $data->{calendars};
+        return 5 * $data->{calendars};
     }
     return 0;
 };
@@ -125,12 +125,12 @@ sub checkDataHelper {
     my $c = shift;
     my $data = $c->data;
 
-   if (not @{$data->{orgs}}){
-       die [
-           'Wählen Sie welche Organisationen mit ihrem Anteil des Gewinns unterstützt werden sollen.'
-        ];    
-   }
-
+  if ($data->{orgs} and not @{$data->{orgs}}){
+      die [
+          'Wählen Sie welche Organisationen mit ihrem Anteil des Gewinns unterstützt werden sollen.'
+       ];    
+  }
+  $data->{orgs} //= [];
     for my $key (@addr){
         if (not $data->{addr}{$key}){
             die [
@@ -283,13 +283,13 @@ sub processCcPayment {
             $c->stripe->create_charge({
                 token => $data->{token},
                 amount => $amount * 100, #amount in rappen
-                description => 'Oltner Kalender 2018',
+                description => 'Oltner Kalender',
                 currency => 'chf',
                 capture => 0,
                 metadata => {
                     ( map { $_ => $data->{$_} } qw(delivery calendars) ),
                     ( map { $_ => $data->{addr}{$_} } sort keys %{$data->{addr}}),
-                    orgs => join (',', @{$data->{orgs}} )
+                    orgs => (join (',', @{$data->{orgs}} )//'')
                 },
                 receipt_email => $data->{addr}{email},
             }, shift->begin);
@@ -352,7 +352,7 @@ sub sendConfirmation {
         ->OpenMultipart({
             to => $c->data->{addr}{email},
             bcc => $c->cfg->{GENERAL}{mailBcc},
-            subject => encode('MIME-Header',"Bestellbestätigung Oltner Kalender 2018 #$id"),
+            subject => encode('MIME-Header',"Bestellbestätigung Oltner Kalender #$id"),
             multipart => 'alternative',
         })
 
