@@ -117,3 +117,8 @@ nav {
 #busypop .valign {
     margin: auto;
 }
+
+dt {
+    margin-top: 1ex;
+    font-weight: bold;
+}
