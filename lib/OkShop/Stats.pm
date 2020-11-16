@@ -26,7 +26,7 @@ sub statsPage {
     my $app = $c->app;
     my $cfg = $app->config->cfgHash;
     my $table = $app->sql->db->query(
-        q{SELECT * FROM ord WHERE ord_product = 'ok2019'}
+        q{SELECT * FROM ord WHERE ord_product = 'ok2021'}
     )->hashes;
 
 # extra shopped
@@ -63,10 +63,11 @@ sub statsPage {
     },0);
  
     my $total = $table->reduce(sub {
-        $a + $b->{ord_count} * 38 
+        $a + $b->{ord_count} * 36 
     },0);
 
-
+# post calc
+ #   $total = 7200;
 
 
     my $part_cal = 0;

@@ -1,12 +1,15 @@
 package OkShop::Order;
 
-use Mojo::Base 'Mojolicious::Controller';
+use Mojo::Base 'Mojolicious::Controller', -signatures,-async_await;
 use Mojo::SQLite;
-use Mojo::JSON qw(encode_json);
-use Email::Valid;
-use Mail::Sender;
+use Mojo::JSON qw(encode_json decode_json);
+use OkShop::Model::Email;
 use Encode qw/encode decode/;
 use Mojo::Exception;
+use Mojo::Util qw(dumper);
+use Syntax::Keyword::Try;
+use Email::Valid;
+use OkShop::Model::Stripe;
 
 =head1 NAME
 
@@ -17,7 +20,6 @@ OkShop::Orders - Controller Class
  $c->checkForm($data)
 
 =cut
-
 
 has log => sub {
     shift->app->log;
@@ -78,6 +80,18 @@ has orgMap => sub {
     return \%orgMap;
 };
 
+has mailer  => sub ($self) {
+    OkShop::Model::Email->new( app=> $self->app, log=>$self->log );
+};
+
+has stripe => sub ($self) {
+    OkShop::Model::Stripe->new(
+        app=> $self->app, 
+        log=>$self->log, 
+        hookSec => $self->cfg->{GENERAL}{stripeHookSecret},
+        secret => $self->cfg->{GENERAL}{stripeSecretKey})
+};
+
 my @addr = qw(first_name last_name street nr zip town country email);
 
 my %addr = (
@@ -121,7 +135,7 @@ my %adrCheckerRules = (
     }
 );
 
-sub checkDataHelper {
+async sub checkDataHelper {
     my $c = shift;
     my $data = $c->data;
 
@@ -139,30 +153,44 @@ sub checkDataHelper {
             ];
         };
     }
-
-    if ($data->{addr}{country} =~ /schweiz|switzerland|suisse|ch|svizzera/i){
-        my $check = $c->app->adrChecker->(
-            Params => {
-                MaxRows => 100,
-                CallUser => $c->cfg->{GENERAL}{adrCheckerUser},
-                SearchLanguage => 1,
-                SearchType => 1
-            },
-            $data->{addr}{company} ? (
-                FirstName => '',
-                Name => $data->{addr}{company} )
-            : (
-                FirstName => $data->{addr}{first_name},
-                Name => $data->{addr}{last_name},
-            ),
-            Street => $data->{addr}{street},
-            HouseNbr => $data->{addr}{nr},
-            Zip => $data->{addr}{zip},
-            Town => $data->{addr}{town},
-            HouseKey => 0,
-            PboxAddress => 0,
-        );
-        $c->log->debug($c->app->dumper($check));
+    # the api is not happy with us at present :( so disable this for now
+    if (0 and $data->{addr}{country} =~ /schweiz|switzerland|suisse|ch|svizzera/i){
+        my $check;
+        try {
+            $check = await $c->app->adrChecker->call_p('AdrCheckerExterne', {
+                Params => {
+                    MaxRows => 100,
+                    CallUser => $c->cfg->{GENERAL}{adrCheckerUser},
+                    SearchLanguage => 1,
+                    SearchType => 1
+                },
+                $data->{addr}{company} ? (
+                    FirstName => '',
+                    Name => $data->{addr}{company} )
+                : (
+                    FirstName => $data->{addr}{first_name},
+                    Name => $data->{addr}{last_name},
+                ),
+                Street => $data->{addr}{street},
+                HouseNbr => $data->{addr}{nr},
+                Zip => $data->{addr}{zip},
+                Town => $data->{addr}{town},
+                HouseKey => 0,
+                PboxAddress => 0,
+           });
+        } catch ($err) {
+            $c->log->error("Error: ".$err);
+            die [
+                "Adress-Checker Fehler",
+            ];
+        };
+        if ($check->{Body}{Fault}) {
+            $c->log->error($check->{Body}{Fault}{FaultMsg});
+            die [
+                "Address-Checker Fehler"
+            ];
+        }
+        $c->log->debug("Got Result:".dumper $check->{Body});
         if (my $ck = $check->{Body}{rows}[0]){
             for my $key (@adrCheckerRules){
 #                if ($data->{addr}{company} and not $ck->{NameCurrentlyValid}){
@@ -207,14 +235,19 @@ sub getCost {
         total => $c->amount
     })
 }
-sub checkData {
+
+async sub checkData {
     my $c = shift;
-    if (my $err = $c->checkDataHelper){
-        die [$err];
+    $c->render_later;
+    try {
+        await $c->checkDataHelper;
+        return $c->render(json => {
+            status => {}
+        });
     }
-    return $c->render(json => {
-        status => {}
-    });
+    catch ($err) {
+        return $c->render_error($err);
+    }
 }
 
 sub recordOrder {
@@ -223,7 +256,10 @@ sub recordOrder {
     my $meta = shift;
     my $data = $c->data;
     my $app = $c->app;
-    my $id = $app->sql->db->query(<<SQL_END,
+    $c->log->debug("Record Order");
+    my $db = $app->sql->db;
+    my $tx = $db->begin;
+    my $id = $db->query(<<SQL_END,
 INSERT INTO ord ( ord_product, ord_count,
     ord_first_name, ord_last_name,
     ord_street, ord_zip, ord_company,
@@ -232,7 +268,7 @@ INSERT INTO ord ( ord_product, ord_count,
     ord_meta, ord_orgs, ord_seller )
 VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 SQL_END
-        'ok2019', $data->{calendars},
+        'ok2021', $data->{calendars},
         $data->{addr}{first_name},
         $data->{addr}{last_name},
         $data->{addr}{street}.' '. $data->{addr}{nr},
@@ -248,133 +284,121 @@ SQL_END
         $seller
     )->last_insert_id;
     $c->sendConfirmation($id,$meta);
+    $tx->commit;
     return $id;
 }
 
-sub processShopPayment {
+async sub processShopPayment {
     my $c = shift;
-    $c->checkDataHelper;
-    if (my $login = $c->session('login')){
-        $c->recordOrder($login,{ ip=>$c->tx->remote_address })
-    }
-    else {
-        die ['No Shopping without login'];
-    }
-    $c->render(json=>{
-        status => {}
-    });
-}
-
-
-sub processCcPayment {
-    my $c = shift;
-    if (my $err = $c->checkDataHelper){
-        return $c->render(json => { error => $err} );
-    }
-    my $data = $c->data;
-    if (not $data->{token}){
-        die ['No Shopping without token'];
-    }
-    my $amount = $c->amount;
-
-    $c->log->debug("charging stripe $amount chf");
-    $c->delay(
-        sub {
-            $c->stripe->create_charge({
-                token => $data->{token},
-                amount => $amount * 100, #amount in rappen
-                description => 'Oltner Kalender',
-                currency => 'chf',
-                capture => 0,
-                metadata => {
-                    ( map { $_ => $data->{$_} } qw(delivery calendars) ),
-                    ( map { $_ => $data->{addr}{$_} } sort keys %{$data->{addr}}),
-                    orgs => (join (',', @{$data->{orgs}} )//'')
-                },
-                receipt_email => $data->{addr}{email},
-            }, shift->begin);
-        },
-        sub {
-            my ($delay, $err, $charge) = @_;
-            if ($err){
-                die [$err]
-            }
-            my $id = $c->recordOrder('stripe_prep',$charge);
-            $delay->pass($charge,$id);
-        },
-        sub {
-            my ($delay, $charge, $id, $err, $res) = @_;
-            if ($err){
-                die [$err]
-            }
-            $delay->pass($id);
-            $c->stripe->capture_charge($charge, $delay->begin);
-        },
-        sub {
-            my ($delay, $id, $err, $res) = @_;
-            if ($err){
-                die [$err]
-            }
-            $c->app->sql->db->query(<<'SQL_END',$id);
-UPDATE ord SET ord_seller = 'stripe' WHERE ord_id = ?
-SQL_END
-            $c->render(json=>{
-                status => {}
-            });
-        }
-    );
     $c->render_later;
+    try {
+        await $c->checkDataHelper;
+        if (my $login = $c->session('login')){
+            $c->recordOrder($login,{ ip=>$c->tx->remote_address })
+        }
+        else {
+            die ['No Shopping without login'];
+        }
+        $c->render(json=>{
+            status => {}
+        });
+    } catch ($err) {
+        $c->render_error($err);
+    }
 }
 
 
+async sub createIntent {
+    my $c = shift;
+    $c->render_later;
+    try {
+        if (my $err = await $c->checkDataHelper){
+            return $c->render(json => { error => $err} );
+        }
+        my $data = $c->data;
+        my $amount = $c->amount;
+
+        $c->log->debug("charging stripe $amount chf");
+        my %meta = (( map { 
+                 'metadata['.$_.']', $data->{$_}
+              } qw(delivery calendars)
+            ),
+            ( map { 
+                 'metadata[addr_'.$_.']', => $data->{addr}{$_}
+               } sort keys %{$data->{addr}}
+            ),
+            "metadata[orgs]" => encode_json($data->{orgs})
+        );
+        my $intent = await $c->stripe->call_p('POST','payment_intents', {
+            amount => $amount * 100,
+            currency => 'chf',
+            receipt_email => $data->{addr}{email},
+            'payment_method_types[]' => 'card',
+            description => 'Oltner Kalender',
+
+            %meta
+        });
+        $c->log->debug(dumper $intent);
+        $c->render(json=>{
+            client_secret => $intent->{client_secret},
+            id => $intent->{id}
+        });
+    } catch ($err) {
+        $c->render_error($err);
+    }
+}
+
+sub stripeWebhook ($c) {
+    #$c->log->debug(dumper $c->data);
+    my %newData;
+    my $md = $c->data->{data}{object}{metadata};
+    if (not $c->stripe->checkStripeSignature($c->req)) {
+        return $c->render(status => 403, text => 'invalid signature');
+    }
+    for my $key (keys %$md) {
+        if ($key =~ /addr_(.+)/){
+            $newData{addr}{$1} = $md->{$key};
+        }
+        elsif ($key eq 'orgs') {
+            $newData{orgs} = decode_json($md->{orgs});
+        }
+        else {
+            $newData{$key} = $md->{$key};
+        }
+    }
+    my $intent = $c->data;
+    $c->data(\%newData);
+    $c->log->debug(dumper $c->data);
+    $c->recordOrder('stripe',$intent);
+    $c->render(json=>{status=>'ok'});
+}
 
 sub sendConfirmation {
     my $c = shift;
     my $id = shift;
     my $meta = shift;
     my $cfg = $c->cfg;
-    $c->stash('d',$c->data);
-    $c->stash('login',$c->session('login'));
-    $c->stash('cost_calendar',$c->calendar);
-    $c->stash('cost_porto',$c->porto);
-    $c->stash('cost_total',$c->amount);
-    $c->stash('source',$meta->{source}{brand} // '');
-    $c->stash('orgs',[ map { $c->orgMap->{$_}{name} }  @{$c->data->{orgs}}]);
-    $c->stash('id',$id);
+    $c->log->debug("Send Confirmation Mail");
 
     eval {
-        new Mail::Sender({
-            smtp => $cfg->{GENERAL}{mailSmtp},
-            from => $cfg->{GENERAL}{mailFrom},
-            TLS_allowed => 0,
-        })
-
-        ->OpenMultipart({
+        $c->mailer->sendMail({
             to => $c->data->{addr}{email},
-            bcc => $c->cfg->{GENERAL}{mailBcc},
-            subject => encode('MIME-Header',"Bestellbestätigung Oltner Kalender #$id"),
-            multipart => 'alternative',
-        })
-
-        ->Part({
-            ctype => 'text/plain',
-            disposition => 'NONE',
-            charset => 'UTF-8',
-            msg => $c->render_to_string('mail',format=>'txt')
-        })
-
-        ->Part({
-            ctype => 'text/html',
-            disposition => 'NONE',
-            charset => 'UTF-8',
-            msg => $c->render_to_string('mail',format=>'html')
-        })
-        ->EndPart("multipart/alternative")
-        ->Close;
+            template => 'mail',
+            args => {
+                d => ,$c->data,
+                login => $c->session('login'),
+                cost_calendar => $c->calendar,
+                cost_porto => $c->porto,
+                cost_total => $c->amount,
+                source => $meta->{source}{brand} // '',
+                orgs => [ map { $c->orgMap->{$_}{name} }  @{$c->data->{orgs}}],
+                id => $id,
+            }
+        });
     };
     if ($@){
-        die ["sending mail for order #$id: <pre>".$@."</pre>"];
         $c->log->error("sending mail for order #$id: ".$@);
+        die ["sending mail for order #$id: <pre>".$@."</pre>"];
     }
 }
 
@@ -382,7 +406,7 @@ sub sendConfirmation {
 
 =head1 COPYRIGHT
 
-Copyright (c) 2016 by OETIKER+PARTNER AG. All rights reserved.
+Copyright (c) 2020 by OETIKER+PARTNER AG. All rights reserved.
 
 =head1 AUTHOR
 

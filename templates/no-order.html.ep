@@ -7,7 +7,7 @@
 <div id="pics" class="z-depth-3 slider">
   <a id="order-button" class="waves-effect waves-light btn" href="#order-start">Kalender Bestellen</a>
   <ul class="slides">
-  % for my $pic ( sort glob $home->rel_file('public').'/images/*.jpg' ){
+  % for my $pic ( sort glob $home->rel_file('public').'/images/19*.jpg' ){
   %   my $file = [ split m{/}, $pic ]->[-1];
     <li>
       <img src="<%= url_for 'images'.'/'.$file %>">

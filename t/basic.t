@@ -1,12 +1,13 @@
-#!/usr/bin/env perl
 use FindBin;
 use lib $FindBin::Bin.'/../thirdparty/lib/perl5';
 use lib $FindBin::Bin.'/../lib';
 
+use Mojo::Base -strict;
 
 use Test::More;
 use Test::Mojo;
 
-use_ok 'RestGw';
+my $t = Test::Mojo->new('OkShop');
+$t->get_ok('/')->status_is(200)->content_like(qr/Mojolicious/i);
 
 done_testing();

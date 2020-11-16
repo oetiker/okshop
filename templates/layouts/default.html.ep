@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta property="og:site_name" content="Oltner Kalender 2020"/>
+    <meta property="og:site_name" content="Oltner Kalender 2021"/>
     <meta property="og:url" content="https://www.oltner-kalender.ch" />
-    <meta property="og:image" content="https://www.oltner-kalender.ch/images/181030_OK2019_small01.jpg" />
-        <meta property="og:description" content="Ein Kalender mit den besten Fotografien von Olten, zugunsten von Projekten die Olten zu einer lebenswerten Stadt machen." />
-    <meta property="og:title" content="Oltner Kalender 2020"/>
+    <meta property="og:image" content="https://www.oltner-kalender.ch/images/ok2021.jpg" />
+    <meta property="og:description" content="Ein Kalender mit den besten Fotografien von Olten, zugunsten von Projekten die Olten zu einer lebenswerten Stadt machen." />
+    <meta property="og:title" content="Oltner Kalender 2021"/>
     <meta property="og:type" content="website"/>
     <meta property="fb:app_id" content="1793474840937766"/>
     <title><%= title %> - Oltner Kalender</title>
@@ -35,30 +35,30 @@
   <nav>
     <div class="nav-wrapper grey">
       <div class="container">
-          <a href="<%= url_for './' %>" class="brand-logo">Oltner Kalender <span class="hide-on-small-only">2020</span> <%= $shopmode ? '('.$login.')' : '' %></a>
+          <a href="<%= url_for './' %>" class="brand-logo">Oltner Kalender <span class="hide-on-small-only">2021</span> <%= $shopmode ? '('.$login.')' : '' %></a>
 
           <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-%#           <li><a href="<%= url_for './' %>">Shop</a></li>
+           <li><a href="<%= url_for './' %>">Shop</a></li>
             % if ($login) {
                 <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
             % }
-%#           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
-         <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
-           <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
+           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+%#         <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
+%#         <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
            <li><a href="<%= url_for './about' %>">Über uns</a></li>
            % if ($shopmode) {
                <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
            % }
           </ul>
           <ul class="side-nav" id="mobile-menu">
-%#            <li><a href="<%= url_for './' %>">Shop</a></li>
-%#           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
+            <li><a href="<%= url_for './' %>">Shop</a></li>
+           <li><a href="<%= url_for './stats' %>">Statistik</a></li>
               % if ($login) {
                   <li><a href="<%= url_for './list' %>">Bestellungen</a></li>
               % } 
-              <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
-              <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
+%#            <li><a href="<%= url_for './bildeingaben' %>">Bildeingaben</a></li>
+%#            <li><a href="<%= url_for './beguenstigte' %>">Begünstigte</a></li>
               <li><a href="<%= url_for './about' %>">Über uns</a></li>
               % if ($shopmode) {
                   <li><a href="<%= url_for './logout' %>">Abmelden</a></li>
@@ -82,7 +82,7 @@
           </div>
       <div class="footer-copyright">
         <div class="container">
-        © 2019 Oltner Kalender
+        © 2020 Oltner Kalender
         </div>
       </div>
     </footer>

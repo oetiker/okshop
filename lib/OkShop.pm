@@ -1,15 +1,16 @@
 package OkShop;
 
-use Mojo::Base 'Mojolicious';
+use Mojo::Base 'Mojolicious', -signatures, -async_await;
 use OkShop::Config;
 use Mojo::SQLite;
 use Mojo::JSON qw(encode_json);
+use Mojo::Util qw(dumper);
 use OkShop::Order;
 use OkShop::List;
 use Mojo::Util qw(sha1_sum b64_encode);
-use XML::Compile::WSDL11;      # use WSDL version 1.1
-use XML::Compile::SOAP11;      # use SOAP version 1.1
-use XML::Compile::Transport::SOAPHTTP;
+use Syntax::Keyword::Try;
+use HTTP::Headers;
+use Mojo::SOAP::Client;
 
 our $VERSION = "0.2.0";
 
@@ -52,7 +53,7 @@ has sql => sub {
     my $var = $app->home->rel_file('var');
     -d $var or mkdir $var, 0700;
     chmod 0700, $var;
-    my $sql = Mojo::SQLite->new($app->home->rel_file('var/okshop.db' ));
+    my $sql = Mojo::SQLite->new($app->home->rel_file('okshop.db' ));
 
     $sql->options({
         RaiseError => 1,
@@ -73,25 +74,26 @@ has sql => sub {
     return $sql;
 };
 
+has mailTransport => sub ($self) {
+    if ($ENV{HARNESS_ACTIVE}) {
+        require Email::Sender::Transport::Test;
+        return Email::Sender::Transport::Test->new;
+    }
+    return;
+};
+
 has adrChecker => sub {
     my $app = shift;
     my $home = $app->home;
     my $cfg = $app->config->cfgHash;
-    my $wsdl = XML::Compile::WSDL11->new($home->rel_file('etc/adrCheckerExterne-V4-01-00.wsdl'));
-    $wsdl->importDefinitions($home->rel_file('etc/adrCheckerExterne-V4-01-00.xsd'));
-    $wsdl->importDefinitions($home->rel_file('etc/adrCheckerTypes-V4-01-00.xsd'));
-    my $basic_auth = sub {
-        my ($request, $trace) = @_;
-        my $authorization = 'Basic '.
-            b64_encode "$cfg->{GENERAL}{adrCheckerUser}:$cfg->{GENERAL}{adrCheckerPassword}";
-        $request->header(Authorization => $authorization );
-        my $ua = $trace->{user_agent};
-        $ua->request($request);
-    };
-    return $wsdl->compileClient(
-        'AdrCheckerExterne',
-        transport_hook => $basic_auth,
-        aync => 1,
+    Mojo::SOAP::Client->new(
+        wsdl => $home->rel_file('etc/adrCheckerExterne-V4-01-00.wsdl'),
+        xsds => [ $home->rel_file('etc/adrCheckerExterne-V4-01-00.xsd'), $home->rel_file('etc/adrCheckerTypes-V4-01-00.xsd')],
+        uaProperties => {
+            header => HTTP::Headers->new(
+                Authorization => 'Basic '. b64_encode("$cfg->{GENERAL}{adrCheckerUser}:$cfg->{GENERAL}{adrCheckerPassword}","")
+            )
+        }
     );
 };
 
@@ -102,11 +104,6 @@ sub startup {
     $app->commands->message("Usage:\n\n".$app->commands->extract_usage."\nCommands:\n\n");
     $app->secrets([$cfg->{GENERAL}{secret}]);
     $app->sessions->cookie_name('okshop');
-    $app->plugin(
-        StripePayment => {
-            secret => $cfg->{GENERAL}{stripeSecretKey},
-        }
-    );
 
     my $r = $app->routes->under( sub {
         my $c = shift;
@@ -129,70 +126,96 @@ sub startup {
         return undef;
     });
 
-    $app->hook(around_dispatch => sub {
-        my ($next, $c) = @_;
-        eval {
-            $next->()
-        };
-        if ($@){
-            if (ref $@ eq 'ARRAY') {
+    $app->helper(
+        render_error => sub ($c,$error) {
+            if (ref $error eq 'ARRAY') {
                 $c->render(json=>{
                     error=> {
-                        msg => $@->[0],
-                        $@->[1] ? (fieldId => $@->[1]) : ()
+                        msg => $error->[0],
+                        $error->[1] ? (fieldId => $error->[1]) : ()
                     }
                 });
-                if ($@->[0] =~ /<pre>/){
-                    $app->log->error($@->[0]);
+                if ($error->[0] =~ /<pre>/){
+                    $c->log->error($error->[0]);
                 }
             }
             else {
                 $c->render(json=>{
                     error=> {
-                        msg => "<pre>$@</pre>",
+                        msg => "Interner Fehler",
                     }
                 });
-                $app->log->error($@);
+                $c->log->error($error);
             }
-        }
-    });
+        }  
+    );
+    # $app->hook(around_dispatch => async sub {
+    #     my ($next, $c) = @_;
+    #     eval {
+    #         $c->log->debug(dumper $next);
+    #         await $next->()
+    #     };
+    #     if ($error){
+    #         $c->log->error("Caught an error:".dumper $error);
+    #         if (ref $error eq 'ARRAY') {
+    #             $c->render(json=>{
+    #                 error=> {
+    #                     msg => $error->[0],
+    #                     $error->[1] ? (fieldId => $error->[1]) : ()
+    #                 }
+    #             });
+    #             if ($error->[0] =~ /<pre>/){
+    #                 $c->log->error($error->[0]);
+    #             }
+    #         }
+    #         else {
+    #             $c->render(json=>{
+    #                 error=> {
+    #                     msg => "<pre>$error</pre>",
+    #                 }
+    #             });
+    #             $c->log->error($error);
+    #         }
+    #     }
+    # });
 
     $r->get('/about');
-    $r->get('/bildeingaben');
-    $r->get('/beguenstigte');
-    $r->get('index.html' => 'bildeingaben');
+#    $r->get('/bildeingaben');
+#    $r->get('/beguenstigte');
+#    $r->get('index.html' => 'bildeingaben');
    
-    $r->get('/login' => sub {
-        my $c = shift;
-        $c->session('shopmode' => 1);
-        $c->session('login' => '');
-        $c->redirect_to('.')
-    });
+#    $r->get('/login' => sub {
+#        my $c = shift;
+#        $c->session('shopmode' => 1);
+#        $c->session('login' => '');
+#        $c->redirect_to('.')
+#    });
 
-    $r->get('/logout' => sub {
-        my $c = shift;
-        $c->session('shopmode' => 0);
-        $c->session('login' => '');
-        $c->redirect_to('.')
-    });
-
+#    $r->get('/logout' => sub {
+#        my $c = shift;
+#        $c->session('shopmode' => 0);
+#        $c->session('login' => '');
+#        $c->redirect_to('.')
+#    });
+    
     $r->get('/index.html' => sub {
         my $c = shift;
         $c->stash('ORGANISATIONS' => $cfg->{ORGANISATIONS});
         $c->stash('home' => $app->home);
         $c->stash('stripePubKey' => $cfg->{GENERAL}{stripePubKey});
         #$c->render('order-phase2');
-        $c->render('no-order');
-        #$c->render('order');
+        #$c->render('no-order');
+        $c->render('order');
     });
 
     $r->get('/list')->to( controller=>'List', action=>'orderList');
     $r->get('/stats')->to( controller=>'Stats', action=>'statsPage');
 
-#     $r->post('/get-cost')->to( controller=>'Order', action=>'getCost');
-#     $r->post('/check-data')->to( controller=>'Order', action=>'checkData');
-#    $r->post('/process-cc-payment')->to( controller=>'Order', action=>'processCcPayment');
-#    $r->post('/process-shop-payment')->to( controller=>'Order', action=>'processShopPayment');
+    $r->post('/get-cost')->to( controller=>'Order', action=>'getCost');
+    $r->post('/check-data')->to( controller=>'Order', action=>'checkData');
+    $r->post('/create-intent')->to( controller=>'Order', action=>'createIntent');
+    $r->post('/stripe-webhook')->to( controller=>'Order', action=>'stripeWebhook');
+    $r->post('/process-shop-payment')->to( controller=>'Order', action=>'processShopPayment');
 
 }
 
