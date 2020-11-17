@@ -210,25 +210,30 @@ $(document).ready(function() {
     });
     var stripe = window.stripeObj;
     var elements = stripe.elements();
-    var card = elements.create('card');
-    card.on('change', ({error}) => {
+    var card = elements.create('card',{
+        hidePostalCode: true
+    });
+    card.on('change', event => {
         let displayError = document.getElementById('card-errors');
-        if (error) {
+        if (event.error) {
           displayError.textContent = error.message;
         } else {
           displayError.textContent = '';
         }
+        $('#order_btn').prop('disabled', !event.complete);
     });
+    $('#order_btn').prop('disabled',true);
     card.mount('#card-element');
     $('#order_btn').on('click',function(e){
         showBusy();
         e.preventDefault();
         e.stopPropagation();
+        var formData = getFormData();
         $.ajax('create-intent',{
             dataType: 'json',
             method: 'POST',
             contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(getFormData()),
+            data: JSON.stringify(formData),
             error: function(xhr,status){
                 hideBusy();
                 $('#errorpop .modal-content')
@@ -246,13 +251,27 @@ $(document).ready(function() {
                 }
                 stripe.confirmCardPayment(intent.client_secret, {
                     payment_method: {
-                      card: card
+                      card: card,
+                      billing_details: {
+                          address: {
+                              postal_code: formData.addr.zip
+                          },
+                          name: formData.addr.first_name+' '+formData.addr.last_name,
+                      }
                     }
                 }).then(function(result) {
                     hideBusy();
                     if (result.error) {
+                        var msg = result.error.message;
+                        if (result.error.decline_code) {
+                            msg += ' Decline Code: ' 
+                                + result.error.decline_code +'.';
+                        }
+                        if (result.error.doc_url) {
+                            msg += ' <a href="'+result.error.doc_url+'" target="_new">More Information.</a>'
+                        }
                         $('#stripeerrorpop .modal-content').html('<h4>Card Validation Problem</h4>'
-                        +'<p class="flow-text">'+result.error.message+'</p>');
+                        +'<p class="flow-text">'+msg+'</p>');
                         $('#payform').modal('close');
                         $('#stripeerrorpop').modal('open');
                         return;

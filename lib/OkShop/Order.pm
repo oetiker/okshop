@@ -333,9 +333,9 @@ async sub createIntent {
             amount => $amount * 100,
             currency => 'chf',
             receipt_email => $data->{addr}{email},
+            # 'payment_method_types[]' => 'card',
             'payment_method_types[]' => 'card',
             description => 'Oltner Kalender',
-
             %meta
         });
         $c->log->debug(dumper $intent);
