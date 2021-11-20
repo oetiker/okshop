@@ -27,7 +27,9 @@ nav {
 
 #project-list .card-image {
     padding: 4px;
+    width: 108px;
 }
+
 
 #project-list .card .card-content .card-title {
     font-size: 17px;

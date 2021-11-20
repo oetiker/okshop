@@ -4,18 +4,12 @@
 <div class="container">
 <br/>
 <br/>
-<div id="pics" class="z-depth-3 slider">
-  <a id="order-button" class="waves-effect waves-light btn" href="#order-start">Kalender Bestellen</a>
-  <ul class="slides">
-  % for my $pic ( sort glob $home->rel_file('public').'/images/19*.jpg' ){
-  %   my $file = [ split m{/}, $pic ]->[-1];
-    <li>
-      <img src="<%= url_for 'images'.'/'.$file %>">
-    </li>
-  % }
-  </ul>
-</div>
-</div>
+%# <div id="pics" class="z-depth-3">
+%#  %# <a id="order-button" class="waves-effect waves-light btn" href="#order-start">Jetzt Bestellen</a>
+%# <iframe
+%# src="https://www.youtube-nocookie.com/embed/_dWufvuVoLM?playsinline=1&controls=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+%#  </div>
+%# </div>
 
 
 <div class="container">
@@ -27,13 +21,16 @@
       <a name="order-start"></a>
       <p class="flow-text">
 
-Mit dem Kauf des Oltner Kalenders unterstützen Sie die kulturelle Vielfalt
-in der Region Olten. Wenn sie einen Kalender bestellt haben können sie ihn
-jetzt bei der <a href="https://goo.gl/maps/Th5qRVrm4CT2"
-target="_new">Buchhandlung Klosterplatz</a> oder bei <a target="_new"
-href="https://goo.gl/maps/QVsN93J5PCQ2">Schreiber Kirchgasse</a> abholen. 
-Einige Exemplare liegen auch noch bereit für Leute die keine Vorbestellungen
-gemacht haben.
+<p>Mit dem Kauf des Oltner Kalenders unterstützen Sie die kulturelle Vielfalt
+in der Region Olten.</p>
+
+<p>Ab dem 20. November kann hier der Kalender 2022 bestellt werden</p>
+%# Wenn Sie einen Kalender bestellt haben, können Sie ihn
+%# jetzt bei der <a href="https://goo.gl/maps/Th5qRVrm4CT2"
+%# target="_new">Buchhandlung Klosterplatz</a> oder bei <a target="_new"
+%# href="https://goo.gl/maps/QVsN93J5PCQ2">Schreiber Kirchgasse</a> abholen. 
+%# In der Einige Exemplare liegen auch noch bereit für Leute die keine Vorbestellungen
+%# gemacht haben.
 
       </p>
 

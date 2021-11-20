@@ -4,7 +4,7 @@
     <meta property="og:site_name" content="Oltner Kalender 2021"/>
     <meta property="og:url" content="https://www.oltner-kalender.ch" />
     <meta property="og:image" content="https://www.oltner-kalender.ch/images/ok2021.jpg" />
-    <meta property="og:description" content="Ein Kalender mit den besten Fotografien von Olten, zugunsten von Projekten die Olten zu einer lebenswerten Stadt machen." />
+    <meta property="og:description" content="Ein Kalender mit Fotografien von Olten, zugunsten von Projekten die Olten zu einer lebenswerten Stadt machen." />
     <meta property="og:title" content="Oltner Kalender 2021"/>
     <meta property="og:type" content="website"/>
     <meta property="fb:app_id" content="1793474840937766"/>
@@ -86,6 +86,21 @@
         </div>
       </div>
     </footer>
+<!-- Fathom - simple website analytics - https://github.com/usefathom/fathom -->
+<script>
+(function(f, a, t, h, o, m){
+	a[h]=a[h]||function(){
+		(a[h].q=a[h].q||[]).push(arguments)
+	};
+	o=f.createElement('script'),
+	m=f.getElementsByTagName('script')[0];
+	o.async=1; o.src=t; o.id='fathom-script';
+	m.parentNode.insertBefore(o,m)
+})(document, window, '//analytics.oetiker.ch/tracker.js', 'fathom');
+fathom('set', 'siteId', 'UUYFW');
+fathom('trackPageview');
+</script>
+<!-- / Fathom -->
   </body>
 </html>
 

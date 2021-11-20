@@ -1,5 +1,5 @@
 requires 'Mojolicious';
-requires 'Mojolicious::Plugin::StripePayment';
+#requires 'Mojolicious::Plugin::StripePayment';
 requires 'Data::Processor';
 requires 'IO::Socket::SSL';
 requires 'Mojo::SQLite';

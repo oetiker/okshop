@@ -10,4 +10,4 @@ cat CHANGES >> CHANGES.new && mv CHANGES.new CHANGES
 $EDITOR CHANGES
 #./bootstrap
 make dist
-cat $T-$V.tar.gz | ssh oltcal@freddie 'tar zxf -;cd '$T'-'$V';./configure --prefix=$HOME/opt/'$T';make install;$HOME/start-okshop.sh'
+cat $T-$V.tar.gz | ssh oltcal@freddielx 'tar zxf -;cd '$T'-'$V';./configure --prefix=$HOME/opt/'$T';make install;$HOME/start-okshop.sh'

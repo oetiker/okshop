@@ -67,7 +67,7 @@ sub statsPage {
     },0);
 
 # post calc
- #   $total = 7200;
+    $total = 16000;
 
 
     my $part_cal = 0;

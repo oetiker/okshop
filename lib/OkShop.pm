@@ -12,7 +12,7 @@ use Syntax::Keyword::Try;
 use HTTP::Headers;
 use Mojo::SOAP::Client;
 
-our $VERSION = "0.2.0";
+our $VERSION = "0.6.0";
 
 =head1 NAME
 
@@ -211,11 +211,11 @@ sub startup {
     $r->get('/list')->to( controller=>'List', action=>'orderList');
     $r->get('/stats')->to( controller=>'Stats', action=>'statsPage');
 
-    $r->post('/get-cost')->to( controller=>'Order', action=>'getCost');
-    $r->post('/check-data')->to( controller=>'Order', action=>'checkData');
-    $r->post('/create-intent')->to( controller=>'Order', action=>'createIntent');
-    $r->post('/stripe-webhook')->to( controller=>'Order', action=>'stripeWebhook');
-    $r->post('/process-shop-payment')->to( controller=>'Order', action=>'processShopPayment');
+     $r->post('/get-cost')->to( controller=>'Order', action=>'getCost');
+     $r->post('/check-data')->to( controller=>'Order', action=>'checkData');
+     $r->post('/create-intent')->to( controller=>'Order', action=>'createIntent');
+     $r->post('/stripe-webhook')->to( controller=>'Order', action=>'stripeWebhook');
+     $r->post('/process-shop-payment')->to( controller=>'Order', action=>'processShopPayment');
 
 }
 
