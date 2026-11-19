@@ -1,3 +1,7 @@
+ - The shop pages no longer load tracker.js from analytics.oetiker.ch. That
+   service has been shut down, so every page showed a failed request for
+   it in the browser console.
+
 0.6.0 2021-11-20 16:01:37 +0100 Tobias Oetiker <tobi@oetiker.ch>
 
  - created config for 2022
